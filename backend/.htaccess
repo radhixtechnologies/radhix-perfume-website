@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Allow direct access to existing files & folders (e.g., uploads)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route /api/ and everything else to api/index.php
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+RewriteRule ^(.*)$ api/index.php [QSA,L]
