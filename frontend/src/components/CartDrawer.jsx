@@ -145,7 +145,7 @@ export default function CartDrawer() {
                 }}
                 className="w-full py-3.5 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-extrabold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-gold-glow hover:scale-[1.02] active:scale-[0.98]"
               >
-                <span>Proceed to UPI Payment</span>
+                <span>Proceed to Pay</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
