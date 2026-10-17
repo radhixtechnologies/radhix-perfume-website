@@ -135,22 +135,24 @@ export default function Home({ onOpenConsultation }) {
                   transform: `translate3d(${mouseOffset.x}px, ${mouseOffset.y}px, 0px) rotate(${mouseOffset.x * 0.15}deg)`,
                 }}
               >
-                <img
-                  src="/uploads/bnb-gold-intense.svg"
-                  alt="BNB Gold Intense Extrait de Parfum"
-                  onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-gold-intense.svg'; }}
-                  className="w-[280px] sm:w-[340px] drop-shadow-[0_25px_35px_rgba(212,175,55,0.4)] animate-float-slow"
-                />
+                <Link to="/product/boss-n-buzz-originals">
+                  <img
+                    src="/uploads/bnb-originals-bottle.jpg"
+                    alt="Boss N Buzz Originals Extrait de Parfum"
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bottle.jpg'; }}
+                    className="w-[280px] sm:w-[340px] drop-shadow-[0_25px_35px_rgba(212,175,55,0.45)] animate-float-slow rounded-2xl hover:scale-105 transition-transform"
+                  />
+                </Link>
               </div>
 
               {/* Floating Gold Monogram Badge */}
               <div className="absolute bottom-4 right-4 z-20 px-3.5 py-2 rounded-xl bg-dark-900/90 border border-gold-400/40 backdrop-blur-md shadow-gold-glow flex items-center gap-2">
                 <div className="w-6 h-6 rounded-full border border-gold-400/50 p-0.5 bg-dark-950 flex items-center justify-center shrink-0">
-                  <img src="/bnn-monogram.png" alt="BNB" className="w-full h-full object-contain" />
+                  <img src="/bnn-monogram.png" alt="BNB" className="w-full h-full object-contain" onError={(e) => { e.currentTarget.src = '/bnb-monogram.svg'; }} />
                 </div>
                 <div className="text-left">
                   <span className="block text-[9px] text-cream-300 font-cinzel uppercase tracking-wider">SIGNATURE RELEASE</span>
-                  <span className="block text-[11px] text-gold-300 font-bold font-cinzel">BNB Gold Intense • 100 ML</span>
+                  <span className="block text-[11px] text-gold-300 font-bold font-cinzel">Boss N Buzz Originals • 100 ML</span>
                 </div>
               </div>
 
@@ -189,52 +191,72 @@ export default function Home({ onOpenConsultation }) {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="luxury-glass rounded-2xl p-5 border border-gold-500/20 text-center">
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 items-stretch">
+              
+              {/* Card 1: Pure Bottle */}
+              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
                   <img
-                    src="/uploads/bnb-royal-oud-sovereign.svg"
-                    alt="BNB Royal Oud"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-royal-oud-sovereign.svg'; }}
-                    className="w-32 mx-auto drop-shadow-md mb-3"
+                    src="/uploads/bnb-originals-bottle.jpg"
+                    alt="Boss N Buzz Originals Bottle"
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bottle.jpg'; }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <h4 className="font-cinzel text-xs font-bold text-cream-50">BNB Royal Oud</h4>
-                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Aged Cambodian Oud</p>
                 </div>
-                <div className="luxury-glass rounded-2xl p-5 border border-gold-500/20 text-center">
-                  <img
-                    src="/uploads/bnb-noir-absolu.svg"
-                    alt="BNB Noir Absolu"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-noir-absolu.svg'; }}
-                    className="w-32 mx-auto drop-shadow-md mb-3"
-                  />
-                  <h4 className="font-cinzel text-xs font-bold text-cream-50">BNB Noir Absolu</h4>
-                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Smoky Leather & Coffee</p>
+                <div>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Pure 40% Extrait</h4>
+                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Heavy Crystal Bottle</p>
                 </div>
               </div>
 
-              <div className="space-y-4 pt-8">
-                <div className="luxury-glass rounded-2xl p-5 border border-gold-500/20 text-center">
+              {/* Card 2: Presentation Chest */}
+              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
                   <img
-                    src="/uploads/bnb-velvet-rose-saffron.svg"
-                    alt="BNB Velvet Rose"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-velvet-rose-saffron.svg'; }}
-                    className="w-32 mx-auto drop-shadow-md mb-3"
+                    src="/uploads/bnb-originals-gift-box.jpg"
+                    alt="Boss N Buzz Presentation Box"
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-gift-box.jpg'; }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <h4 className="font-cinzel text-xs font-bold text-cream-50">Velvet Rose & Saffron</h4>
-                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Midnight Turkish Rose</p>
                 </div>
-                <div className="luxury-glass rounded-2xl p-5 border border-gold-500/20 text-center">
-                  <img
-                    src="/uploads/bnb-sovereign-amber.svg"
-                    alt="BNB Sovereign Amber"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-sovereign-amber.svg'; }}
-                    className="w-32 mx-auto drop-shadow-md mb-3"
-                  />
-                  <h4 className="font-cinzel text-xs font-bold text-cream-50">Sovereign Amber</h4>
-                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">French Cognac & Amber</p>
+                <div>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Artisan Chest</h4>
+                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Gold Braided Handles</p>
                 </div>
               </div>
+
+              {/* Card 3: Velvet Bedding */}
+              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
+                  <img
+                    src="/uploads/bnb-originals-box-horizontal.jpg"
+                    alt="Open Velvet Gift Chest"
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-box-horizontal.jpg'; }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Satin Gift Box</h4>
+                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Gold Silk Bedding</p>
+                </div>
+              </div>
+
+              {/* Card 4: Bespoke Carry Bag */}
+              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
+                  <img
+                    src="/uploads/bnb-originals-bag.jpg"
+                    alt="Haute Boutique Shopping Bag"
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bag.jpg'; }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Bespoke Carry Bag</h4>
+                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Matte Black & Gold Embossed</p>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -260,7 +282,7 @@ export default function Home({ onOpenConsultation }) {
             to="/shop"
             className="text-xs font-cinzel font-bold text-gold-400 hover:text-gold-300 uppercase tracking-[0.2em] flex items-center gap-2 group"
           >
-            <span>View All 6 Elixirs</span>
+            <span>Explore Collection</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -272,7 +294,7 @@ export default function Home({ onOpenConsultation }) {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -392,10 +414,10 @@ export default function Home({ onOpenConsultation }) {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { tag: 'VIP Night Out', quote: 'Nuclear trail that lasted through the afterparty.', bottle: '/uploads/bnb-noir-absolu.svg', handle: '@kabir_v' },
-            { tag: 'Boardroom Signature', quote: 'People ask me what I wear before I even speak.', bottle: '/uploads/bnb-gold-intense.svg', handle: '@ananya.roy' },
-            { tag: 'Royal Wedding', quote: 'The aged Cambodian oud note is pure liquid royalty.', bottle: '/uploads/bnb-royal-oud-sovereign.svg', handle: '@rajveer_singh' },
-            { tag: 'Late Night Date', quote: 'Velvet Rose & Saffron has an addictive drydown.', bottle: '/uploads/bnb-velvet-rose-saffron.svg', handle: '@meera.z' },
+            { tag: 'VIP Night Out', quote: 'Nuclear trail that lasted through the afterparty.', bottle: '/uploads/bnb-originals-bottle.jpg', handle: '@kabir_v' },
+            { tag: 'Atelier Unboxing', quote: 'The gold satin presentation box is breathtaking.', bottle: '/uploads/bnb-originals-gift-box.jpg', handle: '@ananya.roy' },
+            { tag: 'Pure Luxury', quote: 'The aged Cambodian oud note is pure liquid royalty.', bottle: '/uploads/bnb-originals-box-horizontal.jpg', handle: '@rajveer_singh' },
+            { tag: 'Haute Gift Bag', quote: 'The unboxing experience feels like high Parisian fashion.', bottle: '/uploads/bnb-originals-bag.jpg', handle: '@meera.z' },
           ].map((item, idx) => (
             <div key={idx} className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-dark-900 border border-gold-500/20 p-4 flex flex-col justify-between">
               <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/40 to-transparent z-10" />

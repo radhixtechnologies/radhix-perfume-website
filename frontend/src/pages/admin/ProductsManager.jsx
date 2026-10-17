@@ -20,7 +20,7 @@ const createEmptyFormData = () => ({
   stock_quantity: 50,
   is_featured: 1,
   is_active: 1,
-  main_image: '/uploads/bnb-gold-intense.svg',
+  main_image: '/uploads/bnb-originals-bottle.jpg',
 });
 
 export default function ProductsManager() {

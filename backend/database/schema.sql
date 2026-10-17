@@ -145,7 +145,7 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `description`) VALUES
 (3, 'Women Royal Florals', 'women-royal-florals', 'Seductive nectar, velvety damask rose, and radiant amber.')
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
 
--- Seed 6 Luxury Perfumes
+-- Seed Luxury Perfumes
 INSERT INTO `products` (
   `id`, `category_id`, `name`, `slug`, `tagline`, `price`, `discount_price`, `size_ml`, `concentration`,
   `short_description`, `full_description`, `top_notes`, `heart_notes`, `base_notes`, `longevity`,
@@ -153,96 +153,83 @@ INSERT INTO `products` (
   `main_image`, `seo_title`, `seo_description`
 ) VALUES
 (
-  1, 1, 'BNB Gold Intense', 'bnb-gold-intense', 'The Golden Throne of Indian Parfumerie',
-  4499.00, 3499.00, 100, 'Extrait de Parfum (40% Oil)',
-  'An opulent collision of radiant Italian bergamot, golden amber crystals, and aged royal Indian oud.',
-  'BNB Gold Intense is the crown jewel of Boss N Buzz Originals. Formulated at a rare 40% pure perfume oil concentration, this masterpiece opens with an intoxicating blast of sun-drenched Italian bergamot and spicy cardamom. As the aura unfolds, rare Turkish Damask Rose intertwines with velvety praline and warm ambergris, settling into an aristocratic base of aged Assam agarwood and golden sandalwood. Crafted for rulers of the modern era.',
-  'Italian Bergamot, Sunlit Cardamom, Pink Pepper',
-  'Damask Rose Absolute, Golden Amber, French Praline',
-  'Assam Royal Agarwood, Tonka Bean, Mysore Sandalwood',
-  '24+ Hours Nuclear Longevity', 'Heavy, Magnetic Scent Trail', 'All Seasons / High Stakes Evenings',
-  'VIP Galas, Black Tie, Boardrooms, Signature Scent',
-  'in_stock', 45, 1, 1,
-  '/uploads/bnb-gold-intense.svg',
-  'BNB Gold Intense Extrait de Parfum | Boss N Buzz Originals',
-  'Shop BNB Gold Intense luxury perfume by Boss N Buzz Originals. 40% oil concentration, aged Indian oud and golden amber.'
+  1, 1, 'Boss N Buzz Originals', 'boss-n-buzz-originals', 'Be The Boss. Create The Buzz.',
+  4499.00, 3999.00, 100, '40% Extrait de Parfum',
+  'The signature flagship creation of Boss N Buzz. Mastercrafted with aged Assam agarwood, warm saffron, and amber nectar. Presented in an opulent gold satin gift box with bespoke luxury carry bag.',
+  'Boss N Buzz Originals represents the zenith of Indian luxury haute parfumerie. Formulated with an uncompromising 40% pure perfume oil concentration for nuclear longevity and magnetic sillage. Accompanied by our handcrafted gold silk-lined presentation box and matte black gold-embossed rope carry bag.',
+  'Calabrian Bergamot, Royal Saffron, Crisp Cardamom',
+  'Bourbon Vanilla, Smoky Frankincense, French Orris',
+  'Aged Assam Oud, Golden Ambergris, Velvet Cedarwood',
+  '24+ Hours Nuclear Longevity', 'Room-Filling Magnetic Aura', 'All Seasons / Signature Evening',
+  'VIP Events, Red Carpet, Executive Authority',
+  'in_stock', 50, 1, 1,
+  '/uploads/bnb-originals-bottle.jpg',
+  'Boss N Buzz Originals | Haute Parfumerie (40% Extrait)',
+  'Experience Boss N Buzz Originals Extrait de Parfum. Handcrafted Indian luxury fragrance with 24-hour nuclear sillage.'
 ),
 (
-  2, 2, 'BNB Noir Absolu', 'bnb-noir-absolu', 'Darkness Weaponized Into Liquid Charisma',
-  3999.00, 2999.00, 100, 'Extrait de Parfum (38% Oil)',
-  'Smoky black leather, roasted coffee bean, cracked black pepper, and dark Madagascar vanilla.',
-  'Daring, hypnotic, and utterly commanding. BNB Noir Absolu was born in the shadows of midnight encounters. It strikes with an adrenaline rush of freshly cracked black pepper and dark roasted espresso, quickly shrouded in luxury Tuscan glove leather, smoky birch tar, and rich Indonesian patchouli. This is the scent worn by architects of influence who speak softly because their aura shouts.',
-  'Black Pepper, Bitter Orange, Roasted Coffee',
-  'Tuscan Suede, Dark Iris, Smoky Birch Tar',
-  'Indonesian Patchouli, Madagascar Black Vanilla, Cedarwood',
-  '20+ Hours', 'Intense Projection for 8 Hours', 'Autumn, Winter & Night Outs',
-  'Luxury Lounges, Date Nights, Red Carpet Events',
-  'in_stock', 60, 1, 1,
-  '/uploads/bnb-noir-absolu.svg',
-  'BNB Noir Absolu Extrait de Parfum | Boss N Buzz Originals',
-  'Buy BNB Noir Absolu by Boss N Buzz Originals. Dark, smoky leather and black vanilla luxury perfume.'
-),
-(
-  3, 1, 'BNB Royal Oud Sovereign', 'bnb-royal-oud-sovereign', 'Ancient Heritage Reimagined for Gen-Z Kings',
-  4999.00, 3999.00, 100, 'Pure Parfum Extrait (42% Oil)',
-  'Raw wild Cambodian oud infused with nutmeg, saffron threads, and crystalline frankincense.',
-  'A sacred olfactory tribute to royal courts of India and the Middle East. Royal Oud Sovereign utilizes sustainably sourced 15-year aged wild Cambodian and Indian agarwood distillations. Accented with golden Kashmiri saffron stamens, freshly grated nutmeg, and royal frankincense tears, this scent exudes immense pedigree and unshakeable confidence.',
-  'Kashmiri Saffron, Fresh Nutmeg, Clary Sage',
-  'Wild Cambodian Oud, Rosewood, Frankincense Tears',
-  'Smoked Sandalwood, Raw Amber, Dark Musk',
-  '24+ Hours (Indelible)', 'Royal Pervasive Sillage', 'All Year Round Signature',
-  'Weddings, Royalty Gatherings, Landmark Celebrations',
-  'in_stock', 30, 1, 1,
-  '/uploads/bnb-royal-oud-sovereign.svg',
-  'BNB Royal Oud Sovereign | Boss N Buzz Originals',
-  'Authentic wild aged Cambodian Oud perfume in India by Boss N Buzz Originals.'
-),
-(
-  4, 3, 'BNB Velvet Rose & Saffron', 'bnb-velvet-rose-saffron', 'Lethal Elegance Wrapped in Crimson Petals',
-  4199.00, 3199.00, 100, 'Extrait de Parfum (35% Oil)',
-  'Dewy midnight Turkish roses drenched in liquid gold saffron, crushed cinnamon, and creamy vanilla.',
-  'Not your ordinary rose perfume. Velvet Rose & Saffron is seductive, rebellious, and impossibly addictive. We macerated hand-picked Isparta roses under the moonlight, then married them with pungent Iranian saffron threads, sweet spun sugar, and bourbon vanilla pods. The dry-down leaves a trail of pure temptation on human skin that lingers until the morning.',
-  'Iranian Saffron, Juicy Plum, Pink Lychee',
-  'Isparta Damask Rose, Cinnamon Bark, Jasmine Sambac',
-  'Bourbon Vanilla, White Amber, Cashmere Woods',
-  '18+ Hours', 'Enveloping Warm Cloud', 'Romantic Evenings, Spring, Winter',
-  'First Dates, Cocktail Parties, Intimate Dinners',
-  'in_stock', 40, 1, 1,
-  '/uploads/bnb-velvet-rose-saffron.svg',
-  'BNB Velvet Rose & Saffron | Boss N Buzz Originals',
-  'Seductive Turkish Rose & Saffron Extrait de Parfum by Boss N Buzz Originals.'
-),
-(
-  5, 1, 'BNB Elixir Blanc', 'bnb-elixir-blanc', 'Hyper-Fresh Mediterranean Breeze Infused with Diamond Musk',
-  3799.00, 2799.00, 100, 'Extrait de Parfum (32% Oil)',
-  'Calabrian bergamot, chilled sea salt mist, Moroccan neroli, and crystalline solar musk.',
-  'Engineered for those who thrive in sunlight, beach clubs, and high-energy summer days. BNB Elixir Blanc defies fresh fragrances by lasting over 16 hours on skin. It explodes with ultra-crisp Calabrian citrus, cooling sea spray minerals, and blossoming Moroccan neroli, grounded smoothly by clean cedarwood and second-skin ambroxan.',
-  'Calabrian Bergamot, Frozen Grapefruit, Sea Salt',
-  'Moroccan Neroli, Crushed Mint, Rosemary',
-  'Solar Ambroxan, White Cedar, Clean Diamond Musk',
-  '16+ Hours (Extreme Fresh Longevity)', 'Vibrant & Uplifting Sillage', 'Spring, Summer, Daytime',
-  'Yacht Parties, Resort Wear, Daily Casual Luxury',
-  'in_stock', 55, 1, 1,
-  '/uploads/bnb-elixir-blanc.svg',
-  'BNB Elixir Blanc Luxury Fresh Perfume | Boss N Buzz Originals',
-  'Long-lasting luxury fresh perfume with Calabrian bergamot and diamond musk.'
-),
-(
-  6, 1, 'BNB Sovereign Amber', 'bnb-sovereign-amber', 'Intoxication of Aged French Cognac & Smoked Ambergris',
-  4699.00, 3699.00, 100, 'Extrait de Parfum (40% Oil)',
-  'Oak barrel aged cognac, roasted hazelnut, Ceylon cinnamon, melted amber, and benzoin.',
-  'A gourmand masterpiece for the true connoisseur. Sovereign Amber opens with an intoxicating swirl of oak barrel cognac and roasted hazelnuts, cascading into an opulent heart of Ceylon cinnamon and rich toffee, before drying down into warm benzoin resin, natural ambergris, and smoky French oakwood. Warm, welcoming, yet relentlessly sophisticated.',
-  'French Cognac, Roasted Hazelnut, Mandarin Zest',
-  'Ceylon Cinnamon, Praline, Labdanum Resin',
-  'Sovereign Ambergris, Siam Benzoin, Smoked Oak Barrels',
-  '22+ Hours', 'Warm Seductive Sillage', 'Late Nights, Winter & Autumn',
-  'Exclusive Clubs, Festive Evenings, Luxury Gifting',
+  2, 1, 'Boss N Buzz Atelier Gift Set', 'boss-n-buzz-atelier-gift-set', 'The Imperial Silk Box & Scent Experience.',
+  5499.00, 4899.00, 100, '40% Extrait de Parfum',
+  'The complete haute unboxing experience. Features the 100ml Boss N Buzz Originals Extrait nestled in our handcrafted gold silk-lined keepsake box with gold braided rope handles and bespoke boutique carry bag.',
+  'Presenting the pinnacle of fragrance luxury. The Boss N Buzz Atelier Gift Set is masterfully assembled for discerning collectors and momentous gifting occasions. Includes the full-sized 100ml crystal flacon of 40% Extrait de Parfum, cushioned on champagne-gold silk bedding inside a reinforced keepsake case with gold braided cords, accompanied by the signature matte black boutique carry bag.',
+  'Calabrian Bergamot, Royal Saffron, Crisp Cardamom',
+  'Bourbon Vanilla, Smoky Frankincense, French Orris',
+  'Aged Assam Oud, Golden Ambergris, Velvet Cedarwood',
+  '24+ Hours Nuclear Longevity', 'Enveloping Luxury Sillage', 'All Seasons / Celebrations',
+  'Royal Weddings, Milestone Celebrations, VIP Gifting',
   'in_stock', 35, 1, 1,
-  '/uploads/bnb-sovereign-amber.svg',
-  'BNB Sovereign Amber Extrait de Parfum | Boss N Buzz Originals',
-  'Indulgent French cognac and warm amber perfume from Boss N Buzz Originals.'
+  '/uploads/bnb-originals-gift-box.jpg',
+  'Boss N Buzz Atelier Gift Set | Luxury Presentation Box',
+  'The official Boss N Buzz Atelier Gift Set with gold silk presentation box and bespoke carry bag.'
+),
+(
+  3, 2, 'Boss N Buzz Noir Imperial', 'boss-n-buzz-noir-imperial', 'Dark Ambergris & 15-Year Assam Agarwood.',
+  4999.00, 4299.00, 100, '42% Extrait de Parfum',
+  'An intensely concentrated, smoky resinous iteration of the Originals DNA. Infused with double-macerated Assam agarwood, charred bourbon vanilla, and dark ambergris.',
+  'Engineered for those who thrive in the nocturnal hours. Boss N Buzz Noir Imperial takes the iconic Originals architecture into deeper, smokier territory. Rare Assamese oud aged for 15 years marries with dark toasted vanilla and mineral ambergris, creating a commanding sillage that demands deference.',
+  'Black Pepper, Cardamom, Italian Bergamot',
+  'Charred Bourbon Vanilla, Smoked Birch, Dark Iris',
+  '15-Yr Aged Assam Agarwood, Black Amber, Leather Accord',
+  '28+ Hours Nuclear Trail', 'Room-Filling Sovereign Aura', 'Fall / Winter & Black Tie',
+  'Late Nights, Boardrooms, Black Tie Galas',
+  'in_stock', 40, 1, 1,
+  '/uploads/bnb-originals-box-horizontal.jpg',
+  'Boss N Buzz Noir Imperial | 42% Pure Extrait',
+  'Discover Boss N Buzz Noir Imperial. 42% perfume concentration with 15-year aged Assam oud.'
+),
+(
+  4, 1, 'Boss N Buzz Couture Edition', 'boss-n-buzz-couture-edition', 'Originals Extrait with Bespoke Boutique Bag.',
+  4799.00, 4199.00, 100, '40% Extrait de Parfum',
+  'The complete high-fashion ensemble. Boss N Buzz Originals Extrait paired with our custom heavy-weight matte black shopping bag featuring gold metallic foil embossing and gold braided cords.',
+  'A statement of effortless elegance. The Couture Edition bundles the signature Boss N Buzz Originals 100ml flacon with our bespoke heavy-gauge textured shopping tote, embossed with reflective gold foil. Ready to carry into high-fashion salons and private dinners.',
+  'Calabrian Bergamot, Kashmiri Saffron, Pink Pepper',
+  'Bourbon Vanilla, Smoky Frankincense, French Orris',
+  'Assam Agarwood, Golden Ambergris, White Cedar',
+  '24+ Hours Nuclear Longevity', 'Magnetic & Sophisticated', 'All Seasons',
+  'Fashion Weeks, Red Carpet, Executive Authority',
+  'in_stock', 50, 1, 1,
+  '/uploads/bnb-originals-bag.jpg',
+  'Boss N Buzz Couture Edition | Haute Boutique Presentation',
+  'Boss N Buzz Couture Edition fragrance flacon with bespoke gold-embossed tote bag.'
 )
-ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
+ON DUPLICATE KEY UPDATE `name`=VALUES(`name`), `main_image`=VALUES(`main_image`), `is_active`=VALUES(`is_active`);
+
+-- Seed Product Gallery Images
+INSERT INTO `product_images` (`product_id`, `image_url`, `sort_order`) VALUES
+(1, '/uploads/bnb-originals-gift-box.jpg', 0),
+(1, '/uploads/bnb-originals-box-horizontal.jpg', 1),
+(1, '/uploads/bnb-originals-bottle-side.jpg', 2),
+(1, '/uploads/bnb-originals-bag.jpg', 3),
+(2, '/uploads/bnb-originals-bottle.jpg', 0),
+(2, '/uploads/bnb-originals-box-horizontal.jpg', 1),
+(2, '/uploads/bnb-originals-bag.jpg', 2),
+(3, '/uploads/bnb-originals-bottle.jpg', 0),
+(3, '/uploads/bnb-originals-gift-box.jpg', 1),
+(3, '/uploads/bnb-originals-bag.jpg', 2),
+(4, '/uploads/bnb-originals-bottle.jpg', 0),
+(4, '/uploads/bnb-originals-gift-box.jpg', 1),
+(4, '/uploads/bnb-originals-box-horizontal.jpg', 2)
+ON DUPLICATE KEY UPDATE `image_url`=VALUES(`image_url`);
 
 -- Seed Default Settings
 INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES
