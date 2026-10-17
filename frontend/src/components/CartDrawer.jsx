@@ -21,9 +21,9 @@ export default function CartDrawer() {
           
           {/* Header */}
           <div className="p-5 border-b border-dark-800 flex items-center justify-between bg-dark-950">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-gold-400" />
-              <h2 className="font-cinzel text-lg font-bold text-cream-50 uppercase tracking-widest">
+            <div className="flex items-center gap-2.5">
+              <img src="/bnn-monogram.png" alt="BNB" className="w-6 h-6 object-contain" />
+              <h2 className="font-cinzel text-base font-bold text-cream-50 uppercase tracking-widest">
                 Your Luxury Bag
               </h2>
             </div>

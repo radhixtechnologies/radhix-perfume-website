@@ -3,11 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { ShoppingBag, MessageCircle, ShieldCheck, Sparkles, ArrowLeft, Heart, Check, Star, Clock, Zap } from 'lucide-react';
 import { api, getFullImageUrl } from '../services/api';
 import { useCart } from '../context/CartContext';
+import { useSettings } from '../context/SettingsContext';
 import ProductCard from '../components/ProductCard';
 
 export default function ProductDetail({ onOpenConsultation }) {
   const { slug } = useParams();
   const { addToCart, setIsCheckoutOpen } = useCart();
+  const { settings } = useSettings();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,10 +61,11 @@ export default function ProductDetail({ onOpenConsultation }) {
   };
 
   const handleWhatsAppOrder = () => {
+    const targetWhatsApp = settings.whatsapp_number || '919990385942';
     const message = encodeURIComponent(
       `Hello Boss N Buzz Originals Atelier,\n\nI would like to order:\nProduct: ${product.name}\nSize: ${product.size_ml} ML Extrait\nPrice: ₹${effectivePrice}\n\nPlease guide me on delivery.`
     );
-    window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
+    window.open(`https://wa.me/${targetWhatsApp}?text=${message}`, '_blank');
   };
 
   return (
@@ -92,26 +95,37 @@ export default function ProductDetail({ onOpenConsultation }) {
 
           {/* Additional Images Thumbnails if available */}
           {product.additional_images && product.additional_images.length > 0 && (
-            <div className="flex gap-3 mt-4">
-              <button
-                onClick={() => setSelectedImage(product.main_image)}
-                className={`w-16 h-20 rounded-xl bg-dark-900 border p-1 ${
-                  selectedImage === product.main_image ? 'border-gold-400' : 'border-dark-700'
-                }`}
-              >
-                <img src={getFullImageUrl(product.main_image)} alt="Thumbnail" className="w-full h-full object-contain" />
-              </button>
-              {product.additional_images.map((img, idx) => (
+            <div className="w-full mt-5">
+              <span className="block text-center text-[10px] font-cinzel uppercase tracking-[0.2em] text-gold-400 font-semibold mb-2.5">
+                Fragrance & Packaging Gallery
+              </span>
+              <div className="flex flex-wrap justify-center gap-3">
                 <button
-                  key={idx}
-                  onClick={() => setSelectedImage(img)}
-                  className={`w-16 h-20 rounded-xl bg-dark-900 border p-1 ${
-                    selectedImage === img ? 'border-gold-400' : 'border-dark-700'
+                  type="button"
+                  onClick={() => setSelectedImage(product.main_image)}
+                  className={`w-16 h-20 rounded-xl bg-dark-900 border p-1 transition-all duration-300 ${
+                    selectedImage === product.main_image
+                      ? 'border-gold-400 ring-2 ring-gold-400/50 shadow-gold-glow scale-105'
+                      : 'border-dark-700 hover:border-dark-500 opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <img src={getFullImageUrl(img)} alt="Thumbnail" className="w-full h-full object-contain" />
+                  <img src={getFullImageUrl(product.main_image)} alt="Cover view" className="w-full h-full object-contain" />
                 </button>
-              ))}
+                {product.additional_images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setSelectedImage(img)}
+                    className={`w-16 h-20 rounded-xl bg-dark-900 border p-1 transition-all duration-300 ${
+                      selectedImage === img
+                        ? 'border-gold-400 ring-2 ring-gold-400/50 shadow-gold-glow scale-105'
+                        : 'border-dark-700 hover:border-dark-500 opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={getFullImageUrl(img)} alt={`Gallery view ${idx + 1}`} className="w-full h-full object-contain" />
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -200,7 +214,7 @@ export default function ProductDetail({ onOpenConsultation }) {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => addToCart(product, 1)}
-                className="flex-1 py-4 rounded-xl border border-gold-400/60 hover:bg-gold-500/10 text-gold-300 font-cinzel font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-sm"
+                className="flex-1 py-4 rounded-xl border border-gold-400/60 hover:bg-gold-500/10 text-gold-300 font-cinzel font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-sm whitespace-nowrap"
               >
                 <ShoppingBag className="w-4 h-4" />
                 Add to Cart
@@ -208,7 +222,7 @@ export default function ProductDetail({ onOpenConsultation }) {
 
               <button
                 onClick={handleInstantBuy}
-                className="flex-1 py-4 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-gold-glow hover:scale-[1.01]"
+                className="flex-1 py-4 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-gold-glow hover:scale-[1.01] whitespace-nowrap"
               >
                 Buy Now with UPI
               </button>
@@ -217,7 +231,7 @@ export default function ProductDetail({ onOpenConsultation }) {
             {/* Direct WhatsApp Order Button */}
             <button
               onClick={handleWhatsAppOrder}
-              className="w-full py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-lg"
+              className="w-full py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-lg whitespace-nowrap"
             >
               <MessageCircle className="w-4 h-4" />
               Order Instantly on WhatsApp

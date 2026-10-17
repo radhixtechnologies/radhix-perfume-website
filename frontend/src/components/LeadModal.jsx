@@ -80,6 +80,11 @@ export default function LeadModal({ isOpen, onClose, defaultProduct = '' }) {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="text-center mb-6">
+              <img
+                src="/bnnlogo.png"
+                alt="Boss N Buzz Originals"
+                className="h-11 w-auto mx-auto mb-3 object-contain filter drop-shadow-[0_2px_8px_rgba(212,175,55,0.3)]"
+              />
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-[10px] font-cinzel uppercase tracking-widest mb-2">
                 <Sparkles className="w-3 h-3" /> VIP Consultation & 15% Off
               </div>

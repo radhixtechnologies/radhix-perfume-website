@@ -3,10 +3,12 @@ import { QRCodeSVG } from 'qrcode.react';
 import confetti from 'canvas-confetti';
 import { X, CheckCircle, Copy, Check, ArrowRight, ShieldCheck, Sparkles, Smartphone, MessageCircle, AlertCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useSettings } from '../context/SettingsContext';
 import { api } from '../services/api';
 
 export default function UpiPaymentModal() {
   const { items, totalPrice, isCheckoutOpen, setIsCheckoutOpen, clearCart } = useCart();
+  const { settings } = useSettings();
 
   const [step, setStep] = useState('shipping'); // 'shipping' | 'upi_payment' | 'confirmed'
   const [loading, setLoading] = useState(false);
@@ -115,10 +117,11 @@ export default function UpiPaymentModal() {
   };
 
   const handleWhatsAppReceipt = () => {
+    const targetWhatsApp = settings.whatsapp_number || '919990385942';
     const text = encodeURIComponent(
       `Hello Boss N Buzz Originals Atelier,\n\nMaine UPI payment successfully krr diya hai:\n\n• Order Number: ${createdOrder?.order_number}\n• UPI ID: ${targetUpiId}\n• Amount Paid: ₹${createdOrder?.total_amount}\n• 12-Digit UTR Reference: ${upiUtr}\n• Customer: ${formData.customer_name} (${formData.phone})\n\nKripya mera order verify karke dispatch status share karein.\nDhanyawad!`
     );
-    window.open(`https://wa.me/919876543210?text=${text}`, '_blank');
+    window.open(`https://wa.me/${targetWhatsApp}?text=${text}`, '_blank');
   };
 
   return (
@@ -128,8 +131,8 @@ export default function UpiPaymentModal() {
         {/* Modal Header */}
         <div className="p-5 bg-dark-950 border-b border-gold-500/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full border border-gold-400 p-1 flex items-center justify-center bg-dark-900 shadow-gold-glow">
-              <span className="font-cinzel text-gold-400 font-extrabold text-xs">BNB</span>
+            <div className="w-9 h-9 rounded-full border border-gold-400/40 p-1 flex items-center justify-center bg-dark-900 shadow-gold-glow shrink-0 overflow-hidden">
+              <img src="/bnn-monogram.png" alt="BNB" className="w-full h-full object-contain" />
             </div>
             <div>
               <h3 className="font-cinzel text-base font-bold text-cream-50 uppercase tracking-wider">
@@ -320,6 +323,12 @@ export default function UpiPaymentModal() {
                 size={195}
                 level="H"
                 includeMargin={true}
+                imageSettings={{
+                  src: '/bnn-monogram.png',
+                  height: 38,
+                  width: 38,
+                  excavate: true,
+                }}
               />
               <p className="text-[11px] font-bold text-dark-900 tracking-wider uppercase mt-2">
                 Scan with any UPI App

@@ -32,15 +32,19 @@ export default function Navbar({ onOpenConsultation }) {
     { name: 'Atelier & Contact', path: '/contact' },
   ];
 
-  const announcement = settings.announcement_text || '✨ FREE LUXURY VELVET BOX & EXPRESS SHIPPING ACROSS INDIA ON ALL ORDERS ✨';
+  const rawAnnouncement = settings.announcement_text || '✨ FREE LUXURY GIFT PACKAGING + EXPRESS SHIPPING ACROSS INDIA ON ALL ORDERS ✨';
+  const announcement = rawAnnouncement
+    .replace(/[Ô£¿\u00d4\u00a3\u00bf]+/g, '✨')
+    .replace(/\s+/g, ' ')
+    .trim();
 
   return (
     <>
       {/* Top Luxury Announcement Bar (Dynamic from Admin Settings) */}
-      <div className="bg-gradient-to-r from-dark-950 via-dark-900 to-dark-950 border-b border-gold-500/20 py-1.5 px-4 text-center text-xs tracking-[0.2em] uppercase font-cinzel text-gold-300">
-        <span className="inline-flex items-center gap-2">
+      <div className="bg-gradient-to-r from-dark-950 via-dark-900 to-dark-950 border-b border-gold-500/20 py-2 px-4 text-center text-[10px] sm:text-xs tracking-[0.16em] sm:tracking-[0.22em] uppercase font-cinzel text-gold-300 overflow-hidden">
+        <span className="inline-flex items-center justify-center gap-2 max-w-full">
           <Sparkles className="w-3.5 h-3.5 text-gold-400 animate-pulse shrink-0" />
-          <span>{announcement}</span>
+          <span className="truncate">{announcement}</span>
           <Sparkles className="w-3.5 h-3.5 text-gold-400 animate-pulse shrink-0" />
         </span>
       </div>
@@ -49,78 +53,70 @@ export default function Navbar({ onOpenConsultation }) {
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-dark-950/90 backdrop-blur-md border-b border-gold-500/20 py-3 shadow-2xl'
-            : 'bg-transparent py-5'
+            ? 'bg-dark-950/95 backdrop-blur-md border-b border-gold-500/20 py-3 shadow-2xl'
+            : 'bg-dark-950/80 backdrop-blur-sm lg:bg-transparent py-4 sm:py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           
-          {/* Logo & Monogram */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full border border-gold-400/40 p-1 bg-dark-900 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:border-gold-400 shadow-gold-glow">
-              <span className="font-cinzel text-gold-400 font-extrabold text-sm tracking-widest">
-                BNB
-              </span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-cinzel text-base md:text-lg font-black tracking-[0.25em] text-cream-50 group-hover:text-gold-300 transition-colors">
-                BOSS N BUZZ
-              </span>
-              <span className="text-[9px] tracking-[0.35em] text-gold-500 font-semibold uppercase -mt-0.5">
-                ORIGINALS
-              </span>
-            </div>
+          {/* Official Brand Logo */}
+          <Link to="/" className="flex items-center gap-2 group shrink-0 py-0.5">
+            <img
+              src="/bnnlogo.png"
+              alt="Boss N Buzz Originals"
+              className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_10px_rgba(212,175,55,0.35)]"
+            />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 shrink-0">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-xs uppercase tracking-[0.2em] font-medium transition-all hover:text-gold-300 flex items-center gap-1.5 ${
+                className={`text-[11px] xl:text-xs uppercase tracking-[0.14em] xl:tracking-[0.2em] font-medium transition-all hover:text-gold-300 flex items-center gap-1.5 whitespace-nowrap shrink-0 py-1 ${
                   location.pathname === link.path
                     ? 'text-gold-400 font-semibold'
                     : link.highlight
-                    ? 'text-gold-300/90 hover:text-gold-200'
+                    ? 'text-gold-300 hover:text-gold-200'
                     : 'text-cream-200'
                 }`}
               >
-                {link.highlight && <Truck className="w-3.5 h-3.5 text-gold-400" />}
-                <span>{link.name}</span>
+                {link.highlight && <Truck className="w-3.5 h-3.5 text-gold-400 shrink-0" />}
+                <span className="whitespace-nowrap">{link.name}</span>
               </Link>
             ))}
           </nav>
 
           {/* Action Buttons: Cart + VIP Consultation */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
             {/* VIP Consultation Lead Button */}
             <button
               onClick={onOpenConsultation}
-              className="hidden lg:inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-cinzel font-semibold px-4 py-2 rounded-full border border-gold-400/50 text-gold-300 hover:bg-gold-500 hover:text-dark-950 transition-all duration-300 shadow-gold-glow"
+              className="hidden xl:inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-cinzel font-semibold px-4 py-2 rounded-full border border-gold-400/50 text-gold-300 hover:bg-gold-500 hover:text-dark-950 transition-all duration-300 shadow-gold-glow whitespace-nowrap shrink-0"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              VIP Consultation
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <span>VIP Consultation</span>
             </button>
 
             {/* Cart Drawer Trigger */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2.5 rounded-full border border-gold-400/30 text-gold-300 hover:border-gold-400 hover:text-gold-200 bg-dark-900/60 transition-all shadow-sm"
+              className="relative p-2 sm:p-2.5 rounded-full border border-gold-400/30 text-gold-300 hover:border-gold-400 hover:text-gold-200 bg-dark-900/60 transition-all shadow-sm shrink-0"
               aria-label="View Cart"
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gold-gradient text-dark-950 font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-lg font-sans animate-scale">
+                <span className="absolute -top-1 -right-1 bg-gold-gradient text-dark-950 font-bold text-[9px] sm:text-[10px] w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shadow-lg font-sans animate-scale">
                   {totalItems}
                 </span>
               )}
             </button>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile / Tablet Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-cream-100 hover:text-gold-400 focus:outline-none"
+              className="lg:hidden p-2 text-cream-100 hover:text-gold-400 focus:outline-none shrink-0"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -128,33 +124,34 @@ export default function Navbar({ onOpenConsultation }) {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile / Tablet Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-dark-950/95 border-b border-gold-500/20 px-6 py-6 backdrop-blur-xl animate-fadeIn">
-            <div className="flex flex-col gap-4">
+          <div className="lg:hidden bg-dark-950/98 border-b border-gold-500/20 px-6 py-6 backdrop-blur-xl animate-fadeIn shadow-2xl">
+            <div className="flex flex-col gap-3.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className="text-sm uppercase tracking-[0.2em] font-medium text-cream-100 hover:text-gold-400 py-1 border-b border-dark-800 flex items-center justify-between"
+                  className="text-xs sm:text-sm uppercase tracking-[0.18em] font-medium text-cream-100 hover:text-gold-400 py-2 border-b border-dark-850 flex items-center justify-between whitespace-nowrap"
                 >
-                  <span>{link.name}</span>
-                  {link.highlight && <Truck className="w-4 h-4 text-gold-400" />}
+                  <span className="whitespace-nowrap">{link.name}</span>
+                  {link.highlight && <Truck className="w-4 h-4 text-gold-400 shrink-0" />}
                 </Link>
               ))}
-              <div className="pt-2 flex flex-col gap-3">
+              <div className="pt-3 flex flex-col gap-3">
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenConsultation();
                   }}
-                  className="w-full text-center py-2.5 rounded-full bg-gold-gradient text-dark-950 font-cinzel font-bold text-xs uppercase tracking-widest shadow-gold-glow"
+                  className="w-full py-3 rounded-full bg-gold-gradient text-dark-950 font-cinzel font-bold text-xs uppercase tracking-widest shadow-gold-glow flex items-center justify-center gap-2 whitespace-nowrap"
                 >
-                  Book VIP Consultation
+                  <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                  <span>Book VIP Consultation</span>
                 </button>
                 <Link
                   to="/admin"
-                  className="text-center text-[11px] text-cream-300 hover:text-gold-400 uppercase tracking-widest py-1"
+                  className="text-center text-[11px] text-cream-400 hover:text-gold-400 uppercase tracking-widest py-1 whitespace-nowrap"
                 >
                   Atelier Admin Portal →
                 </Link>

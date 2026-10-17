@@ -24,18 +24,18 @@ export default function ProductCard({ product }) {
     <div className="group relative luxury-glass-interactive rounded-2xl p-4 sm:p-5 flex flex-col h-full overflow-hidden transition-all duration-500">
       
       {/* Top Badges */}
-      <div className="flex items-center justify-between z-10 mb-3">
+      <div className="flex items-center justify-between z-10 mb-3 gap-2">
         {discountPercent > 0 ? (
-          <span className="bg-gold-gradient text-dark-950 font-bold text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full font-cinzel shadow-sm">
+          <span className="bg-gold-gradient text-dark-950 font-bold text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full font-cinzel shadow-sm whitespace-nowrap shrink-0">
             {discountPercent}% OFF
           </span>
         ) : (
-          <span className="bg-dark-900 border border-gold-500/30 text-gold-400 text-[10px] tracking-wider uppercase px-2 py-0.5 rounded-full font-cinzel">
+          <span className="bg-dark-900 border border-gold-500/30 text-gold-400 text-[10px] tracking-wider uppercase px-2 py-0.5 rounded-full font-cinzel whitespace-nowrap shrink-0">
             ORIGINALS
           </span>
         )}
 
-        <span className="text-[10px] text-cream-300 font-cinzel uppercase tracking-widest bg-dark-900/80 px-2 py-0.5 rounded border border-dark-700">
+        <span className="text-[10px] text-cream-300 font-cinzel uppercase tracking-widest bg-dark-900/80 px-2 py-0.5 rounded border border-dark-700 whitespace-nowrap shrink-0">
           {product.size_ml} ML
         </span>
       </div>
@@ -46,9 +46,19 @@ export default function ProductCard({ product }) {
           src={getFullImageUrl(product.main_image)}
           alt={product.name}
           onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000' + product.main_image; }}
-          className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-108 group-hover:-translate-y-2 filter drop-shadow-[0_15px_25px_rgba(212,175,55,0.25)]"
+          className={`w-full h-full object-contain transition-all duration-700 ease-out filter drop-shadow-[0_15px_25px_rgba(212,175,55,0.25)] ${
+            product.secondary_image ? 'group-hover:opacity-0 group-hover:scale-105' : 'group-hover:scale-108 group-hover:-translate-y-2'
+          }`}
           loading="lazy"
         />
+        {product.secondary_image && (
+          <img
+            src={getFullImageUrl(product.secondary_image)}
+            alt={`${product.name} alternate angle`}
+            className="w-full h-full object-contain absolute inset-0 p-3 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-108 group-hover:-translate-y-2 filter drop-shadow-[0_15px_25px_rgba(212,175,55,0.25)]"
+            loading="lazy"
+          />
+        )}
 
         {/* Quick View Overlay on Hover */}
         <div className="absolute inset-0 bg-dark-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
@@ -83,26 +93,26 @@ export default function ProductCard({ product }) {
 
         {/* Price & Action Row */}
         <div className="mt-auto pt-3 border-t border-dark-800 flex items-center justify-between gap-2">
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-cinzel text-lg font-black text-gold-300">
+          <div className="shrink-0">
+            <div className="flex items-baseline gap-2 whitespace-nowrap">
+              <span className="font-cinzel text-base sm:text-lg font-black text-gold-300 whitespace-nowrap">
                 ₹{effectivePrice.toLocaleString('en-IN')}
               </span>
               {discountPrice && (
-                <span className="text-xs text-cream-300 line-through">
+                <span className="text-xs text-cream-300 line-through whitespace-nowrap">
                   ₹{price.toLocaleString('en-IN')}
                 </span>
               )}
             </div>
-            <span className="text-[9px] text-cream-300 uppercase tracking-widest block">Incl. all taxes</span>
+            <span className="text-[9px] text-cream-300 uppercase tracking-widest block whitespace-nowrap">Incl. all taxes</span>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 shrink-0">
             {/* WhatsApp Enquire */}
             <button
               onClick={handleWhatsAppEnquiry}
               title="Order on WhatsApp"
-              className="p-2 rounded-xl border border-gold-500/30 text-gold-400 hover:bg-gold-500/10 transition-colors"
+              className="p-2 rounded-xl border border-gold-500/30 text-gold-400 hover:bg-gold-500/10 transition-colors shrink-0"
             >
               <MessageCircle className="w-4 h-4" />
             </button>
@@ -110,7 +120,7 @@ export default function ProductCard({ product }) {
             {/* Add to Cart */}
             <button
               onClick={() => addToCart(product, 1)}
-              className="px-3.5 py-2 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-gold-glow hover:scale-105 active:scale-95"
+              className="px-3 sm:px-3.5 py-2 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-gold-glow hover:scale-105 active:scale-95 whitespace-nowrap shrink-0"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
               <span>Cart</span>

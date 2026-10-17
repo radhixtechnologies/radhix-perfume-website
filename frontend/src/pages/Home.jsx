@@ -77,10 +77,10 @@ export default function Home({ onOpenConsultation }) {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 pt-3">
               <Link
                 to="/shop"
-                className="w-full sm:w-auto px-8 py-4 rounded-full bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.25em] flex items-center justify-center gap-3 shadow-gold-glow-lg hover:scale-105 active:scale-95 transition-all"
+                className="px-7 py-3.5 rounded-full bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2.5 shadow-gold-glow-lg hover:scale-105 active:scale-95 transition-all whitespace-nowrap"
               >
                 <span>Explore Haute Collection</span>
                 <ArrowRight className="w-4 h-4" />
@@ -88,7 +88,7 @@ export default function Home({ onOpenConsultation }) {
 
               <Link
                 to="/track-order"
-                className="w-full sm:w-auto px-6 py-4 rounded-full border border-gold-500/40 text-cream-100 hover:text-gold-300 hover:border-gold-400 font-cinzel font-bold text-xs uppercase tracking-[0.2em] transition-all bg-dark-900/60 flex items-center justify-center gap-2"
+                className="px-5 py-3.5 rounded-full border border-gold-500/40 text-cream-100 hover:text-gold-300 hover:border-gold-400 font-cinzel font-bold text-xs uppercase tracking-[0.16em] transition-all bg-dark-900/60 flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 <Truck className="w-4 h-4 text-gold-400" />
                 <span>Track Order</span>
@@ -96,25 +96,25 @@ export default function Home({ onOpenConsultation }) {
 
               <button
                 onClick={onOpenConsultation}
-                className="w-full sm:w-auto px-6 py-4 rounded-full border border-dark-700 hover:border-gold-400 text-cream-200 font-cinzel font-semibold text-xs uppercase tracking-[0.18em] transition-all"
+                className="px-5 py-3.5 rounded-full border border-dark-700 hover:border-gold-400 text-cream-200 font-cinzel font-semibold text-xs uppercase tracking-[0.16em] transition-all whitespace-nowrap"
               >
-                VIP Scent Consultation
+                VIP Consultation
               </button>
             </div>
 
             {/* Micro Stats */}
-            <div className="pt-6 grid grid-cols-3 gap-4 border-t border-dark-800/80 max-w-md mx-auto lg:mx-0">
+            <div className="pt-6 grid grid-cols-3 gap-3 sm:gap-4 border-t border-dark-800/80 max-w-md mx-auto lg:mx-0 text-center sm:text-left">
               <div>
-                <span className="block font-cinzel text-xl sm:text-2xl font-black text-gold-300">40%</span>
-                <span className="text-[10px] text-cream-300 uppercase tracking-widest">Pure Oil Extrait</span>
+                <span className="block font-cinzel text-xl sm:text-2xl font-black text-gold-300 whitespace-nowrap">40%</span>
+                <span className="text-[10px] text-cream-300 uppercase tracking-widest whitespace-nowrap">Pure Oil Extrait</span>
               </div>
               <div>
-                <span className="block font-cinzel text-xl sm:text-2xl font-black text-gold-300">24+ H</span>
-                <span className="text-[10px] text-cream-300 uppercase tracking-widest">Nuclear Longevity</span>
+                <span className="block font-cinzel text-xl sm:text-2xl font-black text-gold-300 whitespace-nowrap">24+ H</span>
+                <span className="text-[10px] text-cream-300 uppercase tracking-widest whitespace-nowrap">Nuclear Sillage</span>
               </div>
               <div>
-                <span className="block font-cinzel text-xl sm:text-2xl font-black text-gold-300">100%</span>
-                <span className="text-[10px] text-cream-300 uppercase tracking-widest">Cruelty-Free IFRA</span>
+                <span className="block font-cinzel text-xl sm:text-2xl font-black text-gold-300 whitespace-nowrap">100%</span>
+                <span className="text-[10px] text-cream-300 uppercase tracking-widest whitespace-nowrap">Cruelty-Free IFRA</span>
               </div>
             </div>
 
@@ -145,7 +145,9 @@ export default function Home({ onOpenConsultation }) {
 
               {/* Floating Gold Monogram Badge */}
               <div className="absolute bottom-4 right-4 z-20 px-3.5 py-2 rounded-xl bg-dark-900/90 border border-gold-400/40 backdrop-blur-md shadow-gold-glow flex items-center gap-2">
-                <div className="w-5 h-5 rounded-full bg-gold-400 text-dark-950 flex items-center justify-center text-[10px] font-black font-cinzel">★</div>
+                <div className="w-6 h-6 rounded-full border border-gold-400/50 p-0.5 bg-dark-950 flex items-center justify-center shrink-0">
+                  <img src="/bnn-monogram.png" alt="BNB" className="w-full h-full object-contain" />
+                </div>
                 <div className="text-left">
                   <span className="block text-[9px] text-cream-300 font-cinzel uppercase tracking-wider">SIGNATURE RELEASE</span>
                   <span className="block text-[11px] text-gold-300 font-bold font-cinzel">BNB Gold Intense • 100 ML</span>
@@ -297,7 +299,7 @@ export default function Home({ onOpenConsultation }) {
           </div>
 
           {/* Interactive Note Tabs */}
-          <div className="inline-flex p-1.5 rounded-full bg-dark-950 border border-gold-500/30 gap-2">
+          <div className="flex flex-wrap justify-center p-1.5 rounded-2xl sm:rounded-full bg-dark-950 border border-gold-500/30 gap-1.5 sm:gap-2 max-w-full">
             {[
               { id: 'top', label: 'Top Notes (0-30 Mins)', time: 'First Impact' },
               { id: 'heart', label: 'Heart Notes (1-6 Hours)', time: 'Magnetic Core' },
@@ -306,7 +308,7 @@ export default function Home({ onOpenConsultation }) {
               <button
                 key={tab.id}
                 onClick={() => setActiveNoteTab(tab.id)}
-                className={`px-5 py-2.5 rounded-full text-xs font-cinzel font-bold uppercase tracking-wider transition-all duration-300 ${
+                className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-cinzel font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap ${
                   activeNoteTab === tab.id
                     ? 'bg-gold-gradient text-dark-950 shadow-gold-glow scale-105'
                     : 'text-cream-300 hover:text-gold-300'

@@ -103,7 +103,7 @@ export default function TrackOrder() {
           <button
             type="submit"
             disabled={loading}
-            className="px-8 py-3.5 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-bold text-xs uppercase tracking-widest shadow-gold-glow flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
+            className="px-8 py-3.5 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-bold text-xs uppercase tracking-widest shadow-gold-glow flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50 whitespace-nowrap shrink-0"
           >
             {loading ? (
               <span className="animate-pulse">Tracking...</span>

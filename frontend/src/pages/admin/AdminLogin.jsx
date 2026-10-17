@@ -33,15 +33,17 @@ export default function AdminLogin() {
 
       <div className="relative w-full max-w-md bg-dark-900 border border-gold-500/30 rounded-3xl p-8 sm:p-10 shadow-2xl text-cream-100">
         
-        {/* Monogram Header */}
+        {/* Official Brand Logo Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-full border-2 border-gold-400 p-1 mx-auto flex items-center justify-center bg-dark-950 shadow-gold-glow mb-4">
-            <span className="font-cinzel text-gold-400 font-extrabold text-xl tracking-widest">BNB</span>
-          </div>
-          <h1 className="font-cinzel text-xl font-bold text-cream-50 uppercase tracking-widest">
+          <img
+            src="/bnnlogo.png"
+            alt="Boss N Buzz Originals"
+            className="h-16 sm:h-20 w-auto mx-auto object-contain filter drop-shadow-[0_2px_15px_rgba(212,175,55,0.4)] mb-3"
+          />
+          <h1 className="font-cinzel text-lg sm:text-xl font-bold text-cream-50 uppercase tracking-widest">
             Atelier Staff Portal
           </h1>
-          <p className="text-[11px] text-gold-400 tracking-wider uppercase mt-1">
+          <p className="text-[11px] text-gold-400 tracking-wider uppercase mt-0.5">
             Boss N Buzz Originals Management
           </p>
         </div>

@@ -8,7 +8,7 @@ export default function Shop() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [maxPrice, setMaxPrice] = useState(6000);
+  const [maxPrice, setMaxPrice] = useState(15000);
 
   const categories = [
     { id: 'all', label: 'All Fragrances' },
@@ -73,7 +73,7 @@ export default function Shop() {
               <button
                 key={c.id}
                 onClick={() => setSelectedCategory(c.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-cinzel font-bold uppercase tracking-wider transition-all ${
+                className={`px-4 py-2 rounded-xl text-xs font-cinzel font-bold uppercase tracking-wider transition-all whitespace-nowrap shrink-0 ${
                   selectedCategory === c.id
                     ? 'bg-gold-gradient text-dark-950 shadow-gold-glow'
                     : 'bg-dark-950 text-cream-200 border border-dark-700 hover:border-gold-500/40'
@@ -108,8 +108,8 @@ export default function Shop() {
 
           <input
             type="range"
-            min="2500"
-            max="6000"
+            min="500"
+            max="15000"
             step="100"
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}

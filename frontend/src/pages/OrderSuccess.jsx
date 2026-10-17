@@ -21,6 +21,15 @@ export default function OrderSuccess() {
 
   return (
     <div className="py-20 px-4 max-w-xl mx-auto text-center min-h-[75vh] flex flex-col justify-center">
+      {/* Brand Logo */}
+      <div className="flex justify-center mb-6">
+        <img
+          src="/bnnlogo.png"
+          alt="Boss N Buzz Originals"
+          className="h-14 sm:h-16 w-auto object-contain filter drop-shadow-[0_4px_16px_rgba(212,175,55,0.25)]"
+        />
+      </div>
+
       <div className="w-16 h-16 rounded-full bg-gold-gradient text-dark-950 flex items-center justify-center mx-auto shadow-gold-glow mb-6">
         <CheckCircle className="w-10 h-10" />
       </div>

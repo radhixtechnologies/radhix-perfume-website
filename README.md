@@ -60,7 +60,7 @@
   - Recent VIP leads list with one-click action triggers.
 - **Products Catalog CRUD (`/admin/products`)**:
   - Add new perfumes, edit existing perfumes, delete from archives.
-  - Drag-and-drop / file upload for bottle images directly to `/backend/uploads`.
+  - Upload a primary bottle image and multiple additional product gallery images directly to `/backend/uploads`; gallery thumbnails appear on the product detail page.
   - Toggle "Featured" badge and "Active" status instantly reflected on the public boutique.
   - Full olfactory field control: top notes, heart notes, base notes, longevity, sillage, sizes, pricing, and discount prices.
 - **Orders & UPI Verification Manager (`/admin/orders`)**:

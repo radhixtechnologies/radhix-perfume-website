@@ -10,7 +10,8 @@ class ProductController {
         $minPrice = isset($_GET['min_price']) ? (float)$_GET['min_price'] : null;
         $maxPrice = isset($_GET['max_price']) ? (float)$_GET['max_price'] : null;
 
-        $sql = "SELECT p.*, c.name as category_name, c.slug as category_slug 
+        $sql = "SELECT p.*, c.name as category_name, c.slug as category_slug,
+                (SELECT image_url FROM product_images WHERE product_id = p.id ORDER BY sort_order ASC, id ASC LIMIT 1) as secondary_image
                 FROM products p 
                 LEFT JOIN categories c ON p.category_id = c.id 
                 WHERE p.is_active = 1";
@@ -102,7 +103,47 @@ class ProductController {
                             LEFT JOIN categories c ON p.category_id = c.id 
                             ORDER BY p.id DESC");
         $products = $stmt->fetchAll();
+
+        foreach ($products as &$product) {
+            $product['additional_images'] = [];
+        }
+        unset($product);
+
+        if ($products) {
+            $productIds = array_column($products, 'id');
+            $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+            $imageStmt = $db->prepare("SELECT product_id, image_url FROM product_images
+                                       WHERE product_id IN ($placeholders)
+                                       ORDER BY sort_order ASC, id ASC");
+            $imageStmt->execute($productIds);
+            $imagesByProduct = [];
+            foreach ($imageStmt->fetchAll() as $image) {
+                $imagesByProduct[$image['product_id']][] = $image['image_url'];
+            }
+
+            foreach ($products as &$product) {
+                $product['additional_images'] = $imagesByProduct[$product['id']] ?? [];
+            }
+            unset($product);
+        }
+
         echo json_encode(['success' => true, 'data' => $products]);
+    }
+
+    private static function saveAdditionalImages($db, $productId, $images) {
+        $deleteStmt = $db->prepare("DELETE FROM product_images WHERE product_id = ?");
+        $deleteStmt->execute([$productId]);
+
+        if (!is_array($images)) {
+            return;
+        }
+
+        $insertStmt = $db->prepare("INSERT INTO product_images (product_id, image_url, sort_order) VALUES (?, ?, ?)");
+        foreach (array_values($images) as $index => $imageUrl) {
+            if (is_string($imageUrl) && trim($imageUrl) !== '') {
+                $insertStmt->execute([$productId, trim($imageUrl), $index]);
+            }
+        }
     }
 
     public static function createProduct() {
@@ -129,34 +170,44 @@ class ProductController {
             (category_id, name, slug, tagline, price, discount_price, size_ml, concentration, short_description, full_description, top_notes, heart_notes, base_notes, longevity, sillage, season, occasion, stock_status, stock_quantity, is_featured, is_active, main_image, seo_title, seo_description) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
-        $stmt->execute([
-            $data['category_id'] ?? 1,
-            $data['name'],
-            $slug,
-            $data['tagline'] ?? '',
-            $data['price'],
-            !empty($data['discount_price']) ? $data['discount_price'] : null,
-            $data['size_ml'] ?? 100,
-            $data['concentration'] ?? 'Extrait de Parfum',
-            $data['short_description'] ?? '',
-            $data['full_description'] ?? '',
-            $data['top_notes'] ?? '',
-            $data['heart_notes'] ?? '',
-            $data['base_notes'] ?? '',
-            $data['longevity'] ?? '16-24 Hours',
-            $data['sillage'] ?? 'Magnetic Aura',
-            $data['season'] ?? 'All Seasons',
-            $data['occasion'] ?? 'Signature Scent',
-            $data['stock_status'] ?? 'in_stock',
-            $data['stock_quantity'] ?? 50,
-            !empty($data['is_featured']) ? 1 : 0,
-            isset($data['is_active']) ? (int)$data['is_active'] : 1,
-            $data['main_image'] ?? '/uploads/bnb-gold-intense.svg',
-            $data['seo_title'] ?? $data['name'] . ' | Boss N Buzz Originals',
-            $data['seo_description'] ?? ($data['short_description'] ?? '')
-        ]);
+        $db->beginTransaction();
+        try {
+            $stmt->execute([
+                $data['category_id'] ?? 1,
+                $data['name'],
+                $slug,
+                $data['tagline'] ?? '',
+                $data['price'],
+                !empty($data['discount_price']) ? $data['discount_price'] : null,
+                $data['size_ml'] ?? 100,
+                $data['concentration'] ?? 'Extrait de Parfum',
+                $data['short_description'] ?? '',
+                $data['full_description'] ?? '',
+                $data['top_notes'] ?? '',
+                $data['heart_notes'] ?? '',
+                $data['base_notes'] ?? '',
+                $data['longevity'] ?? '16-24 Hours',
+                $data['sillage'] ?? 'Magnetic Aura',
+                $data['season'] ?? 'All Seasons',
+                $data['occasion'] ?? 'Signature Scent',
+                $data['stock_status'] ?? 'in_stock',
+                $data['stock_quantity'] ?? 50,
+                !empty($data['is_featured']) ? 1 : 0,
+                isset($data['is_active']) ? (int)$data['is_active'] : 1,
+                $data['main_image'] ?? '/uploads/bnb-gold-intense.svg',
+                $data['seo_title'] ?? $data['name'] . ' | Boss N Buzz Originals',
+                $data['seo_description'] ?? ($data['short_description'] ?? '')
+            ]);
 
-        $newId = $db->lastInsertId();
+            $newId = $db->lastInsertId();
+            self::saveAdditionalImages($db, $newId, $data['additional_images'] ?? []);
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
 
         echo json_encode([
             'success' => true,
@@ -178,32 +229,44 @@ class ProductController {
             is_featured = ?, is_active = ?, main_image = ?, seo_title = ?, seo_description = ? 
             WHERE id = ?");
 
-        $stmt->execute([
-            $data['category_id'] ?? 1,
-            $data['name'],
-            $data['tagline'] ?? '',
-            $data['price'],
-            !empty($data['discount_price']) ? $data['discount_price'] : null,
-            $data['size_ml'] ?? 100,
-            $data['concentration'] ?? 'Extrait de Parfum',
-            $data['short_description'] ?? '',
-            $data['full_description'] ?? '',
-            $data['top_notes'] ?? '',
-            $data['heart_notes'] ?? '',
-            $data['base_notes'] ?? '',
-            $data['longevity'] ?? '16-24 Hours',
-            $data['sillage'] ?? 'Magnetic Aura',
-            $data['season'] ?? 'All Seasons',
-            $data['occasion'] ?? 'Signature Scent',
-            $data['stock_status'] ?? 'in_stock',
-            $data['stock_quantity'] ?? 50,
-            !empty($data['is_featured']) ? 1 : 0,
-            isset($data['is_active']) ? (int)$data['is_active'] : 1,
-            $data['main_image'],
-            $data['seo_title'] ?? '',
-            $data['seo_description'] ?? '',
-            $id
-        ]);
+        $db->beginTransaction();
+        try {
+            $stmt->execute([
+                $data['category_id'] ?? 1,
+                $data['name'],
+                $data['tagline'] ?? '',
+                $data['price'],
+                !empty($data['discount_price']) ? $data['discount_price'] : null,
+                $data['size_ml'] ?? 100,
+                $data['concentration'] ?? 'Extrait de Parfum',
+                $data['short_description'] ?? '',
+                $data['full_description'] ?? '',
+                $data['top_notes'] ?? '',
+                $data['heart_notes'] ?? '',
+                $data['base_notes'] ?? '',
+                $data['longevity'] ?? '16-24 Hours',
+                $data['sillage'] ?? 'Magnetic Aura',
+                $data['season'] ?? 'All Seasons',
+                $data['occasion'] ?? 'Signature Scent',
+                $data['stock_status'] ?? 'in_stock',
+                $data['stock_quantity'] ?? 50,
+                !empty($data['is_featured']) ? 1 : 0,
+                isset($data['is_active']) ? (int)$data['is_active'] : 1,
+                $data['main_image'],
+                $data['seo_title'] ?? '',
+                $data['seo_description'] ?? '',
+                $id
+            ]);
+            if (array_key_exists('additional_images', $data)) {
+                self::saveAdditionalImages($db, $id, $data['additional_images']);
+            }
+            $db->commit();
+        } catch (Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
 
         echo json_encode(['success' => true, 'message' => 'Product updated successfully']);
     }

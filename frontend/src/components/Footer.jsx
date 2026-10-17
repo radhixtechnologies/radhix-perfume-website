@@ -26,7 +26,7 @@ export default function Footer() {
               <Sparkles className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="font-cinzel text-sm font-bold text-cream-50 uppercase tracking-wider">40% Pure Oil Extrait</h4>
+              <h4 className="font-cinzel text-sm font-bold text-cream-50 uppercase tracking-wider whitespace-nowrap">40% Pure Oil Extrait</h4>
               <p className="text-xs text-cream-300">Nuclear longevity lasting over 24 hours on skin & fabric.</p>
             </div>
           </div>
@@ -36,7 +36,7 @@ export default function Footer() {
               <Truck className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="font-cinzel text-sm font-bold text-cream-50 uppercase tracking-wider">Express Air Courier</h4>
+              <h4 className="font-cinzel text-sm font-bold text-cream-50 uppercase tracking-wider whitespace-nowrap">Express Air Courier</h4>
               <p className="text-xs text-cream-300">Complimentary velvet gift packaging across India.</p>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function Footer() {
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="font-cinzel text-sm font-bold text-cream-50 uppercase tracking-wider">Instant UPI Payment</h4>
+              <h4 className="font-cinzel text-sm font-bold text-cream-50 uppercase tracking-wider whitespace-nowrap">Instant UPI Payment</h4>
               <p className="text-xs text-cream-300">Verified via GPay, PhonePe, Paytm, and BHIM QR.</p>
             </div>
           </div>
@@ -58,14 +58,12 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="md:col-span-1 flex flex-col items-start">
-            <Link to="/" className="flex items-center gap-3 mb-4 group">
-              <div className="w-10 h-10 rounded-full border border-gold-400 p-1 bg-dark-900 flex items-center justify-center shadow-gold-glow">
-                <span className="font-cinzel text-gold-400 font-extrabold text-sm tracking-widest">BNB</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-cinzel text-lg font-black tracking-[0.2em] text-cream-50">BOSS N BUZZ</span>
-                <span className="text-[9px] tracking-[0.35em] text-gold-500 font-semibold uppercase -mt-0.5">ORIGINALS</span>
-              </div>
+            <Link to="/" className="block mb-4 group shrink-0">
+              <img
+                src="/bnnlogo.png"
+                alt="Boss N Buzz Originals"
+                className="h-14 sm:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_12px_rgba(212,175,55,0.4)]"
+              />
             </Link>
             <p className="text-xs text-cream-300 leading-relaxed mb-6 font-light">
               India's premier luxury perfume house. Engineered for bold Gen-Z leaders and connoisseurs who demand nuclear longevity and magnetic sillage.

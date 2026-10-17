@@ -106,51 +106,84 @@ class AdminController {
     public static function uploadImage() {
         requireAdminAuth();
 
-        if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+        $fileKey = isset($_FILES['images']) ? 'images' : (isset($_FILES['image']) ? 'image' : null);
+
+        if (!$fileKey || !isset($_FILES[$fileKey])) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'No image uploaded or upload error']);
+            echo json_encode(['success' => false, 'message' => 'No image uploaded']);
             return;
         }
 
-        $file = $_FILES['image'];
+        $raw = $_FILES[$fileKey];
+        $filesToProcess = [];
+
+        if (is_array($raw['name'])) {
+            $count = count($raw['name']);
+            for ($i = 0; $i < $count; $i++) {
+                if ($raw['error'][$i] === UPLOAD_ERR_OK) {
+                    $filesToProcess[] = [
+                        'name' => $raw['name'][$i],
+                        'tmp_name' => $raw['tmp_name'][$i],
+                        'size' => $raw['size'][$i],
+                    ];
+                }
+            }
+        } else {
+            if ($raw['error'] === UPLOAD_ERR_OK) {
+                $filesToProcess[] = [
+                    'name' => $raw['name'],
+                    'tmp_name' => $raw['tmp_name'],
+                    'size' => $raw['size'],
+                ];
+            }
+        }
+
+        if (empty($filesToProcess)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'No valid image uploaded or upload error']);
+            return;
+        }
+
         $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'svg'];
-        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-
-        if (!in_array($ext, $allowedExtensions)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Invalid image format. Allowed: JPG, PNG, WEBP, SVG']);
-            return;
-        }
-
-        // Limit size: 10MB
-        if ($file['size'] > 10 * 1024 * 1024) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Image size exceeds maximum limit of 10MB']);
-            return;
-        }
-
         $uploadDir = __DIR__ . '/../uploads/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
+        $feUploads = __DIR__ . '/../../frontend/public/uploads/';
 
-        $newFilename = 'bnb-' . time() . '-' . bin2hex(random_bytes(4)) . '.' . $ext;
-        $destPath = $uploadDir . $newFilename;
-
-        if (move_uploaded_file($file['tmp_name'], $destPath)) {
-            // Also synchronize image to frontend/public/uploads if present
-            $feUploads = __DIR__ . '/../../frontend/public/uploads/';
-            if (is_dir($feUploads)) {
-                @copy($destPath, $feUploads . $newFilename);
+        $uploadedUrls = [];
+        foreach ($filesToProcess as $file) {
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, $allowedExtensions)) {
+                continue;
             }
-            echo json_encode([
-                'success' => true,
-                'url' => '/uploads/' . $newFilename,
-                'message' => 'Image uploaded successfully'
-            ]);
-        } else {
-            http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Failed to save uploaded image']);
+            if ($file['size'] > 10 * 1024 * 1024) {
+                continue;
+            }
+
+            $newFilename = 'bnb-' . time() . '-' . bin2hex(random_bytes(4)) . '.' . $ext;
+            $destPath = $uploadDir . $newFilename;
+
+            if (move_uploaded_file($file['tmp_name'], $destPath)) {
+                if (is_dir($feUploads)) {
+                    @copy($destPath, $feUploads . $newFilename);
+                }
+                $uploadedUrls[] = '/uploads/' . $newFilename;
+            }
         }
+
+        if (empty($uploadedUrls)) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to save uploaded image(s)']);
+            return;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'url' => $uploadedUrls[0],
+            'urls' => $uploadedUrls,
+            'count' => count($uploadedUrls),
+            'message' => count($uploadedUrls) . ' image(s) uploaded successfully'
+        ]);
     }
 }
