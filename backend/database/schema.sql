@@ -163,7 +163,7 @@ INSERT INTO `products` (
   '24+ Hours Nuclear Longevity', 'Room-Filling Magnetic Aura', 'All Seasons / Signature Evening',
   'VIP Events, Red Carpet, Executive Authority',
   'in_stock', 50, 1, 1,
-  '/uploads/bnb-originals-bottle.jpg',
+  '/uploads/bnb-originals-bottle-cinematic.jpg',
   'Boss N Buzz Originals | Haute Parfumerie (40% Extrait)',
   'Experience Boss N Buzz Originals Extrait de Parfum. Handcrafted Indian luxury fragrance with 24-hour nuclear sillage.'
 ),
@@ -178,7 +178,7 @@ INSERT INTO `products` (
   '24+ Hours Nuclear Longevity', 'Enveloping Luxury Sillage', 'All Seasons / Celebrations',
   'Royal Weddings, Milestone Celebrations, VIP Gifting',
   'in_stock', 35, 1, 1,
-  '/uploads/bnb-originals-gift-box.jpg',
+  '/uploads/bnb-originals-gift-box-cinematic.jpg',
   'Boss N Buzz Atelier Gift Set | Luxury Presentation Box',
   'The official Boss N Buzz Atelier Gift Set with gold silk presentation box and bespoke carry bag.'
 ),
@@ -193,7 +193,7 @@ INSERT INTO `products` (
   '28+ Hours Nuclear Trail', 'Room-Filling Sovereign Aura', 'Fall / Winter & Black Tie',
   'Late Nights, Boardrooms, Black Tie Galas',
   'in_stock', 40, 1, 1,
-  '/uploads/bnb-originals-box-horizontal.jpg',
+  '/uploads/bnb-originals-noir-cinematic.jpg',
   'Boss N Buzz Noir Imperial | 42% Pure Extrait',
   'Discover Boss N Buzz Noir Imperial. 42% perfume concentration with 15-year aged Assam oud.'
 ),
@@ -208,7 +208,7 @@ INSERT INTO `products` (
   '24+ Hours Nuclear Longevity', 'Magnetic & Sophisticated', 'All Seasons',
   'Fashion Weeks, Red Carpet, Executive Authority',
   'in_stock', 50, 1, 1,
-  '/uploads/bnb-originals-bag.jpg',
+  '/uploads/bnb-originals-couture-cinematic.jpg',
   'Boss N Buzz Couture Edition | Haute Boutique Presentation',
   'Boss N Buzz Couture Edition fragrance flacon with bespoke gold-embossed tote bag.'
 )
@@ -216,19 +216,19 @@ ON DUPLICATE KEY UPDATE `name`=VALUES(`name`), `main_image`=VALUES(`main_image`)
 
 -- Seed Product Gallery Images
 INSERT INTO `product_images` (`product_id`, `image_url`, `sort_order`) VALUES
-(1, '/uploads/bnb-originals-gift-box.jpg', 0),
-(1, '/uploads/bnb-originals-box-horizontal.jpg', 1),
-(1, '/uploads/bnb-originals-bottle-side.jpg', 2),
-(1, '/uploads/bnb-originals-bag.jpg', 3),
-(2, '/uploads/bnb-originals-bottle.jpg', 0),
-(2, '/uploads/bnb-originals-box-horizontal.jpg', 1),
-(2, '/uploads/bnb-originals-bag.jpg', 2),
-(3, '/uploads/bnb-originals-bottle.jpg', 0),
-(3, '/uploads/bnb-originals-gift-box.jpg', 1),
-(3, '/uploads/bnb-originals-bag.jpg', 2),
-(4, '/uploads/bnb-originals-bottle.jpg', 0),
-(4, '/uploads/bnb-originals-gift-box.jpg', 1),
-(4, '/uploads/bnb-originals-box-horizontal.jpg', 2)
+(1, '/uploads/bnb-originals-gift-box-cinematic.jpg', 0),
+(1, '/uploads/bnb-originals-noir-cinematic.jpg', 1),
+(1, '/uploads/bnb-originals-couture-cinematic.jpg', 2),
+(1, '/uploads/bnb-originals-bottle.jpg', 3),
+(2, '/uploads/bnb-originals-bottle-cinematic.jpg', 0),
+(2, '/uploads/bnb-originals-noir-cinematic.jpg', 1),
+(2, '/uploads/bnb-originals-couture-cinematic.jpg', 2),
+(3, '/uploads/bnb-originals-bottle-cinematic.jpg', 0),
+(3, '/uploads/bnb-originals-gift-box-cinematic.jpg', 1),
+(3, '/uploads/bnb-originals-couture-cinematic.jpg', 2),
+(4, '/uploads/bnb-originals-bottle-cinematic.jpg', 0),
+(4, '/uploads/bnb-originals-gift-box-cinematic.jpg', 1),
+(4, '/uploads/bnb-originals-noir-cinematic.jpg', 2)
 ON DUPLICATE KEY UPDATE `image_url`=VALUES(`image_url`);
 
 -- Seed Default Settings

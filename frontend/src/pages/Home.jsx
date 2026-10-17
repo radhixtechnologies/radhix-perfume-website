@@ -137,9 +137,9 @@ export default function Home({ onOpenConsultation }) {
               >
                 <Link to="/product/boss-n-buzz-originals">
                   <img
-                    src="/uploads/bnb-originals-bottle.jpg"
+                    src="/uploads/bnb-originals-bottle-cinematic.jpg"
                     alt="Boss N Buzz Originals Extrait de Parfum"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bottle.jpg'; }}
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bottle-cinematic.jpg'; }}
                     className="w-[280px] sm:w-[340px] drop-shadow-[0_25px_35px_rgba(212,175,55,0.45)] animate-float-slow rounded-2xl hover:scale-105 transition-transform"
                   />
                 </Link>
@@ -197,9 +197,9 @@ export default function Home({ onOpenConsultation }) {
               <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
                 <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
                   <img
-                    src="/uploads/bnb-originals-bottle.jpg"
+                    src="/uploads/bnb-originals-bottle-cinematic.jpg"
                     alt="Boss N Buzz Originals Bottle"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bottle.jpg'; }}
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bottle-cinematic.jpg'; }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -213,9 +213,9 @@ export default function Home({ onOpenConsultation }) {
               <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
                 <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
                   <img
-                    src="/uploads/bnb-originals-gift-box.jpg"
+                    src="/uploads/bnb-originals-gift-box-cinematic.jpg"
                     alt="Boss N Buzz Presentation Box"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-gift-box.jpg'; }}
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-gift-box-cinematic.jpg'; }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -225,19 +225,19 @@ export default function Home({ onOpenConsultation }) {
                 </div>
               </div>
 
-              {/* Card 3: Velvet Bedding */}
+              {/* Card 3: Noir Imperial */}
               <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
                 <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
                   <img
-                    src="/uploads/bnb-originals-box-horizontal.jpg"
-                    alt="Open Velvet Gift Chest"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-box-horizontal.jpg'; }}
+                    src="/uploads/bnb-originals-noir-cinematic.jpg"
+                    alt="Boss N Buzz Noir Imperial"
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-noir-cinematic.jpg'; }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div>
-                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Satin Gift Box</h4>
-                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Gold Silk Bedding</p>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Noir Reserve</h4>
+                  <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Smoky Assam Oud</p>
                 </div>
               </div>
 
@@ -245,9 +245,9 @@ export default function Home({ onOpenConsultation }) {
               <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
                 <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
                   <img
-                    src="/uploads/bnb-originals-bag.jpg"
+                    src="/uploads/bnb-originals-couture-cinematic.jpg"
                     alt="Haute Boutique Shopping Bag"
-                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bag.jpg'; }}
+                    onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-couture-cinematic.jpg'; }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -414,10 +414,10 @@ export default function Home({ onOpenConsultation }) {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { tag: 'VIP Night Out', quote: 'Nuclear trail that lasted through the afterparty.', bottle: '/uploads/bnb-originals-bottle.jpg', handle: '@kabir_v' },
-            { tag: 'Atelier Unboxing', quote: 'The gold satin presentation box is breathtaking.', bottle: '/uploads/bnb-originals-gift-box.jpg', handle: '@ananya.roy' },
-            { tag: 'Pure Luxury', quote: 'The aged Cambodian oud note is pure liquid royalty.', bottle: '/uploads/bnb-originals-box-horizontal.jpg', handle: '@rajveer_singh' },
-            { tag: 'Haute Gift Bag', quote: 'The unboxing experience feels like high Parisian fashion.', bottle: '/uploads/bnb-originals-bag.jpg', handle: '@meera.z' },
+            { tag: 'VIP Night Out', quote: 'Nuclear trail that lasted through the afterparty.', bottle: '/uploads/bnb-originals-bottle-cinematic.jpg', handle: '@kabir_v' },
+            { tag: 'Atelier Unboxing', quote: 'The gold satin presentation box is breathtaking.', bottle: '/uploads/bnb-originals-gift-box-cinematic.jpg', handle: '@ananya.roy' },
+            { tag: 'Pure Luxury', quote: 'The aged Cambodian oud note is pure liquid royalty.', bottle: '/uploads/bnb-originals-noir-cinematic.jpg', handle: '@rajveer_singh' },
+            { tag: 'Haute Gift Bag', quote: 'The unboxing experience feels like high Parisian fashion.', bottle: '/uploads/bnb-originals-couture-cinematic.jpg', handle: '@meera.z' },
           ].map((item, idx) => (
             <div key={idx} className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-dark-900 border border-gold-500/20 p-4 flex flex-col justify-between">
               <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/40 to-transparent z-10" />
