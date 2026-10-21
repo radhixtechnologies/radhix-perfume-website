@@ -2,14 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, Eye, Sparkles, MessageCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useSettings } from '../context/SettingsContext';
 import { getFullImageUrl } from '../services/api';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const { settings } = useSettings();
   const price = Number(product.price);
   const discountPrice = product.discount_price ? Number(product.discount_price) : null;
   const effectivePrice = discountPrice || price;
   const discountPercent = discountPrice ? Math.round(((price - discountPrice) / price) * 100) : 0;
+
+  const targetWhatsApp = settings?.whatsapp_number
+    ? settings.whatsapp_number.replace(/[^0-9]/g, '')
+    : '919990385942';
 
   const handleWhatsAppEnquiry = (e) => {
     e.preventDefault();
@@ -17,7 +23,7 @@ export default function ProductCard({ product }) {
     const message = encodeURIComponent(
       `Hello Boss N Buzz Originals, I am interested in ordering ${product.name} (Extrait de Parfum, ₹${effectivePrice}). Please share availability and delivery timeframe.`
     );
-    window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
+    window.open(`https://wa.me/${targetWhatsApp}?text=${message}`, '_blank');
   };
 
   return (

@@ -78,13 +78,13 @@ export default function Home({ onOpenConsultation }) {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 pt-3">
-              <Link
-                to="/shop"
+              <a
+                href="#collection"
                 className="px-7 py-3.5 rounded-full bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2.5 shadow-gold-glow-lg hover:scale-105 active:scale-95 transition-all whitespace-nowrap"
               >
                 <span>Explore Haute Collection</span>
                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              </a>
 
               <Link
                 to="/track-order"
@@ -163,7 +163,49 @@ export default function Home({ onOpenConsultation }) {
       </section>
 
       {/* ======================================================== */}
-      {/* 2. THE BRAND STORY & 40% EXTRAIT PHILOSOPHY */}
+      {/* 2. FEATURED HAUTE PARFUMS COLLECTION (SHOWCASED FIRST)  */}
+      {/* ======================================================== */}
+      <section id="collection" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-gold-500/15">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-900 border border-gold-500/20 text-gold-400 text-[10px] font-cinzel uppercase tracking-[0.2em] mb-3">
+              <Sparkles className="w-3 h-3 text-gold-400" />
+              <span>THE CURATED EDIT</span>
+            </div>
+            <h2 className="font-cinzel text-3xl sm:text-5xl font-black text-cream-50 uppercase tracking-wider">
+              Signature Haute Collection
+            </h2>
+            <p className="text-xs text-cream-300 mt-2 font-light max-w-xl">
+              Hand-poured 40% pure Extrait de Parfum creations engineered for unprecedented 24-hour presence.
+            </p>
+          </div>
+          
+          <Link
+            to="/shop"
+            className="text-xs font-cinzel font-bold text-gold-400 hover:text-gold-300 uppercase tracking-[0.2em] flex items-center gap-2 group whitespace-nowrap"
+          >
+            <span>Explore All Fragrances</span>
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-96 rounded-2xl bg-dark-900/50 animate-pulse border border-dark-800" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ======================================================== */}
+      {/* 3. THE BRAND STORY & 40% EXTRAIT PHILOSOPHY */}
       {/* ======================================================== */}
       <section className="py-20 bg-dark-900/30 border-y border-gold-500/15 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -194,112 +236,105 @@ export default function Home({ onOpenConsultation }) {
             <div className="grid grid-cols-2 gap-4 sm:gap-5 items-stretch">
               
               {/* Card 1: Pure Bottle */}
-              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
-                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
+              <Link
+                to="/shop"
+                className="luxury-glass rounded-2xl p-4 border border-gold-500/20 hover:border-gold-400/80 hover:shadow-gold-glow text-center group flex flex-col justify-between h-full cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+              >
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner relative">
                   <img
                     src="/uploads/bnb-originals-bottle-cinematic.jpg"
                     alt="Boss N Buzz Originals Bottle"
                     onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-bottle-cinematic.jpg'; }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-dark-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <span className="px-3 py-1.5 rounded-full bg-gold-gradient text-dark-950 font-cinzel text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                      View Collection →
+                    </span>
+                  </div>
                 </div>
                 <div>
-                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Pure 40% Extrait</h4>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50 group-hover:text-gold-300 transition-colors">Pure 40% Extrait</h4>
                   <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Heavy Crystal Bottle</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Card 2: Presentation Chest */}
-              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
-                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
+              <Link
+                to="/shop"
+                className="luxury-glass rounded-2xl p-4 border border-gold-500/20 hover:border-gold-400/80 hover:shadow-gold-glow text-center group flex flex-col justify-between h-full cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+              >
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner relative">
                   <img
                     src="/uploads/bnb-originals-gift-box-cinematic.jpg"
                     alt="Boss N Buzz Presentation Box"
                     onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-gift-box-cinematic.jpg'; }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-dark-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <span className="px-3 py-1.5 rounded-full bg-gold-gradient text-dark-950 font-cinzel text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                      View Collection →
+                    </span>
+                  </div>
                 </div>
                 <div>
-                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Artisan Chest</h4>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50 group-hover:text-gold-300 transition-colors">Artisan Chest</h4>
                   <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Gold Braided Handles</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Card 3: Noir Imperial */}
-              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
-                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
+              <Link
+                to="/shop"
+                className="luxury-glass rounded-2xl p-4 border border-gold-500/20 hover:border-gold-400/80 hover:shadow-gold-glow text-center group flex flex-col justify-between h-full cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+              >
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner relative">
                   <img
                     src="/uploads/bnb-originals-noir-cinematic.jpg"
                     alt="Boss N Buzz Noir Imperial"
                     onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-noir-cinematic.jpg'; }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-dark-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <span className="px-3 py-1.5 rounded-full bg-gold-gradient text-dark-950 font-cinzel text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                      View Collection →
+                    </span>
+                  </div>
                 </div>
                 <div>
-                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Noir Reserve</h4>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50 group-hover:text-gold-300 transition-colors">Noir Reserve</h4>
                   <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Smoky Assam Oud</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Card 4: Bespoke Carry Bag */}
-              <div className="luxury-glass rounded-2xl p-4 border border-gold-500/20 text-center group flex flex-col justify-between h-full">
-                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner">
+              <Link
+                to="/shop"
+                className="luxury-glass rounded-2xl p-4 border border-gold-500/20 hover:border-gold-400/80 hover:shadow-gold-glow text-center group flex flex-col justify-between h-full cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+              >
+                <div className="aspect-[4/5] rounded-xl overflow-hidden bg-dark-950 mb-3 flex items-center justify-center border border-gold-500/10 shadow-inner relative">
                   <img
                     src="/uploads/bnb-originals-couture-cinematic.jpg"
                     alt="Haute Boutique Shopping Bag"
                     onError={(e) => { e.currentTarget.src = 'http://127.0.0.1:8000/uploads/bnb-originals-couture-cinematic.jpg'; }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-dark-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <span className="px-3 py-1.5 rounded-full bg-gold-gradient text-dark-950 font-cinzel text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                      View Collection →
+                    </span>
+                  </div>
                 </div>
                 <div>
-                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50">Bespoke Carry Bag</h4>
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-cream-50 group-hover:text-gold-300 transition-colors">Bespoke Carry Bag</h4>
                   <p className="text-[10px] text-gold-400 uppercase tracking-widest mt-0.5">Matte Black & Gold Embossed</p>
                 </div>
-              </div>
+              </Link>
 
             </div>
           </div>
 
         </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 3. FEATURED HAUTE PARFUMS CAROUSEL / GRID */}
-      {/* ======================================================== */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-900 border border-gold-500/20 text-gold-400 text-[10px] font-cinzel uppercase tracking-[0.2em] mb-3">
-              <Sparkles className="w-3 h-3 text-gold-400" />
-              <span>THE CURATED EDIT</span>
-            </div>
-            <h2 className="font-cinzel text-3xl sm:text-5xl font-black text-cream-50 uppercase tracking-wider">
-              Signature Releases
-            </h2>
-          </div>
-          
-          <Link
-            to="/shop"
-            className="text-xs font-cinzel font-bold text-gold-400 hover:text-gold-300 uppercase tracking-[0.2em] flex items-center gap-2 group"
-          >
-            <span>Explore Collection</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
-
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-96 rounded-2xl bg-dark-900/50 animate-pulse border border-dark-800" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
       </section>
 
       {/* ======================================================== */}
