@@ -78,13 +78,13 @@ export default function Home({ onOpenConsultation }) {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 pt-3">
-              <a
-                href="#collection"
+              <Link
+                to="/shop"
                 className="px-7 py-3.5 rounded-full bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2.5 shadow-gold-glow-lg hover:scale-105 active:scale-95 transition-all whitespace-nowrap"
               >
                 <span>Explore Haute Collection</span>
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
 
               <Link
                 to="/track-order"
@@ -135,7 +135,7 @@ export default function Home({ onOpenConsultation }) {
                   transform: `translate3d(${mouseOffset.x}px, ${mouseOffset.y}px, 0px) rotate(${mouseOffset.x * 0.15}deg)`,
                 }}
               >
-                <Link to="/product/boss-n-buzz-originals">
+                <Link to="/shop" className="cursor-pointer block group">
                   <img
                     src="/uploads/bnb-originals-bottle-cinematic.jpg"
                     alt="Boss N Buzz Originals Extrait de Parfum"
@@ -146,15 +146,18 @@ export default function Home({ onOpenConsultation }) {
               </div>
 
               {/* Floating Gold Monogram Badge */}
-              <div className="absolute bottom-4 right-4 z-20 px-3.5 py-2 rounded-xl bg-dark-900/90 border border-gold-400/40 backdrop-blur-md shadow-gold-glow flex items-center gap-2">
+              <Link
+                to="/shop"
+                className="absolute bottom-4 right-4 z-20 px-3.5 py-2 rounded-xl bg-dark-900/90 border border-gold-400/40 hover:border-gold-400 backdrop-blur-md shadow-gold-glow flex items-center gap-2 cursor-pointer hover:scale-105 transition-all group"
+              >
                 <div className="w-6 h-6 rounded-full border border-gold-400/50 p-0.5 bg-dark-950 flex items-center justify-center shrink-0">
                   <img src="/bnn-monogram.png" alt="BNB" className="w-full h-full object-contain" onError={(e) => { e.currentTarget.src = '/bnb-monogram.svg'; }} />
                 </div>
                 <div className="text-left">
-                  <span className="block text-[9px] text-cream-300 font-cinzel uppercase tracking-wider">SIGNATURE RELEASE</span>
+                  <span className="block text-[9px] text-cream-300 font-cinzel uppercase tracking-wider group-hover:text-gold-400 transition-colors">EXPLORE COLLECTION →</span>
                   <span className="block text-[11px] text-gold-300 font-bold font-cinzel">Boss N Buzz Originals • 100 ML</span>
                 </div>
-              </div>
+              </Link>
 
             </div>
           </div>
