@@ -15,7 +15,13 @@ export default function OrdersManager() {
     setLoading(true);
     try {
       const params = {};
-      if (paymentFilter !== 'All') params.payment_status = paymentFilter;
+      if (paymentFilter === 'Cash on Delivery') {
+        params.payment_method = 'COD';
+      } else if (paymentFilter === 'Instant UPI') {
+        params.payment_method = 'UPI';
+      } else if (paymentFilter !== 'All') {
+        params.payment_status = paymentFilter;
+      }
       const res = await api.getAdminOrders(params);
       if (res?.data) setOrders(res.data);
     } catch (err) {
@@ -58,7 +64,7 @@ export default function OrdersManager() {
 
       {/* Filter */}
       <div className="luxury-glass p-4 rounded-xl border border-dark-800 flex flex-wrap gap-2">
-        {['All', 'Cash on Delivery', 'Pending Verification', 'Verified / Paid', 'Failed'].map((f) => (
+        {['All', 'Cash on Delivery', 'Instant UPI', 'Pending Verification', 'Verified / Paid', 'Failed'].map((f) => (
           <button
             key={f}
             onClick={() => setPaymentFilter(f)}
@@ -143,12 +149,9 @@ export default function OrdersManager() {
                           className={`rounded-lg p-1.5 text-xs font-semibold focus:outline-none bg-dark-950 border ${
                             ord.payment_status === 'Verified / Paid'
                               ? 'border-green-500 text-green-400'
-                              : ord.payment_status === 'Cash on Delivery'
-                              ? 'border-amber-400 text-amber-300'
                               : 'border-amber-warm text-amber-warm'
                           }`}
                         >
-                          <option value="Cash on Delivery">Cash on Delivery (Pending)</option>
                           <option value="Pending Verification">Pending Verification</option>
                           <option value="Verified / Paid">Verified / Paid</option>
                           <option value="Failed">Failed</option>

@@ -20,7 +20,7 @@ class OrderController {
             $paymentMethod = 'UPI';
         }
         $upiUtr = trim($data['upi_utr'] ?? '');
-        $paymentStatus = ($paymentMethod === 'COD') ? 'Cash on Delivery' : 'Pending Verification';
+        $paymentStatus = 'Pending Verification';
 
         if (empty($name) || empty($phone) || empty($address) || empty($pincode) || empty($items)) {
             http_response_code(422);
@@ -190,6 +190,7 @@ class OrderController {
         requireAdminAuth();
         $db = Database::getConnection();
         $paymentStatus = $_GET['payment_status'] ?? null;
+        $paymentMethod = $_GET['payment_method'] ?? null;
         $orderStatus = $_GET['order_status'] ?? null;
         $search = $_GET['search'] ?? null;
 
@@ -199,6 +200,11 @@ class OrderController {
         if ($paymentStatus && $paymentStatus !== 'All') {
             $sql .= " AND payment_status = ?";
             $params[] = $paymentStatus;
+        }
+
+        if ($paymentMethod && $paymentMethod !== 'All') {
+            $sql .= " AND payment_method = ?";
+            $params[] = $paymentMethod;
         }
 
         if ($orderStatus && $orderStatus !== 'All') {
