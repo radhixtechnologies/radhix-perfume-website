@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import confetti from 'canvas-confetti';
-import { X, CheckCircle, Copy, Check, ArrowRight, ShieldCheck, Sparkles, Smartphone, MessageCircle, AlertCircle } from 'lucide-react';
+import {
+  X,
+  CheckCircle,
+  Copy,
+  Check,
+  ArrowRight,
+  ShieldCheck,
+  Smartphone,
+  MessageCircle,
+  Banknote,
+  Truck,
+  Sparkles,
+  CreditCard,
+} from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useSettings } from '../context/SettingsContext';
 import { api } from '../services/api';
@@ -11,6 +24,7 @@ export default function UpiPaymentModal() {
   const { settings } = useSettings();
 
   const [step, setStep] = useState('shipping'); // 'shipping' | 'upi_payment' | 'confirmed'
+  const [paymentMethod, setPaymentMethod] = useState('UPI'); // 'UPI' | 'COD'
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
@@ -50,7 +64,7 @@ export default function UpiPaymentModal() {
     try {
       const payload = {
         ...formData,
-        payment_method: 'UPI',
+        payment_method: paymentMethod,
         items: items.map((it) => ({
           id: it.id,
           quantity: it.quantity,
@@ -60,7 +74,19 @@ export default function UpiPaymentModal() {
       const res = await api.createOrder(payload);
       if (res.success && res.order) {
         setCreatedOrder(res.order);
-        setStep('upi_payment');
+        if (paymentMethod === 'COD') {
+          // Trigger celebratory confetti for instant COD order confirmation
+          confetti({
+            particleCount: 140,
+            spread: 90,
+            origin: { y: 0.6 },
+            colors: ['#F5D77A', '#D4AF37', '#B8860B', '#FFFFFF'],
+          });
+          setStep('confirmed');
+          clearCart();
+        } else {
+          setStep('upi_payment');
+        }
       } else {
         setError(res.message || 'Order initiate karne mein samasya aayi.');
       }
@@ -118,9 +144,16 @@ export default function UpiPaymentModal() {
 
   const handleWhatsAppReceipt = () => {
     const targetWhatsApp = settings.whatsapp_number || '919990385942';
-    const text = encodeURIComponent(
-      `Hello Boss N Buzz Originals Atelier,\n\nMaine UPI payment successfully krr diya hai:\n\n• Order Number: ${createdOrder?.order_number}\n• UPI ID: ${targetUpiId}\n• Amount Paid: ₹${createdOrder?.total_amount}\n• 12-Digit UTR Reference: ${upiUtr}\n• Customer: ${formData.customer_name} (${formData.phone})\n\nKripya mera order verify karke dispatch status share karein.\nDhanyawad!`
-    );
+    let text = '';
+    if (createdOrder?.payment_method === 'COD') {
+      text = encodeURIComponent(
+        `Hello Boss N Buzz Originals Atelier,\n\nMaine Cash on Delivery (COD) order place kiya hai:\n\n• Order Number: ${createdOrder?.order_number}\n• Amount to Pay on Delivery: ₹${createdOrder?.total_amount}\n• Payment Mode: Cash on Delivery (COD)\n• Customer: ${formData.customer_name} (${formData.phone})\n• Shipping Address: ${formData.shipping_address}, ${formData.city}, ${formData.pincode}\n\nKripya mera order confirm karke dispatch timeline share karein.\nDhanyawad!`
+      );
+    } else {
+      text = encodeURIComponent(
+        `Hello Boss N Buzz Originals Atelier,\n\nMaine UPI payment successfully krr diya hai:\n\n• Order Number: ${createdOrder?.order_number}\n• UPI ID: ${targetUpiId}\n• Amount Paid: ₹${createdOrder?.total_amount}\n• 12-Digit UTR Reference: ${upiUtr}\n• Customer: ${formData.customer_name} (${formData.phone})\n\nKripya mera order verify karke dispatch status share karein.\nDhanyawad!`
+      );
+    }
     window.open(`https://wa.me/${targetWhatsApp}?text=${text}`, '_blank');
   };
 
@@ -138,7 +171,7 @@ export default function UpiPaymentModal() {
               <h3 className="font-cinzel text-base font-bold text-cream-50 uppercase tracking-wider">
                 {step === 'shipping' && 'Luxury Express Checkout'}
                 {step === 'upi_payment' && 'Instant UPI Payment QR'}
-                {step === 'confirmed' && 'VIP Order Confirmed'}
+                {step === 'confirmed' && (createdOrder?.payment_method === 'COD' ? 'Cash on Delivery Confirmed' : 'VIP Order Confirmed')}
               </h3>
               <p className="text-[10px] text-gold-400 font-medium">BOSS N BUZZ ORIGINALS ATELIER</p>
             </div>
@@ -158,7 +191,7 @@ export default function UpiPaymentModal() {
           </div>
         )}
 
-        {/* STEP 1: SHIPPING FORM */}
+        {/* STEP 1: SHIPPING & PAYMENT SELECTION */}
         {step === 'shipping' && (
           <form onSubmit={handleInitiateOrder} className="p-6 space-y-4">
             
@@ -270,14 +303,100 @@ export default function UpiPaymentModal() {
               </div>
             </div>
 
-            <div className="pt-2">
+            {/* PAYMENT METHOD SELECTION */}
+            <div className="pt-2 space-y-2">
+              <label className="block text-[11px] font-semibold text-cream-200 uppercase tracking-wider">
+                Select Payment Method *
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                
+                {/* Instant UPI Option */}
+                <div
+                  onClick={() => setPaymentMethod('UPI')}
+                  className={`cursor-pointer rounded-xl p-3.5 border transition-all relative flex flex-col justify-between ${
+                    paymentMethod === 'UPI'
+                      ? 'bg-gold-500/10 border-gold-400 shadow-gold-glow'
+                      : 'bg-dark-950 border-dark-700/60 hover:border-dark-600'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 rounded-lg bg-gold-500/20 text-gold-300">
+                          <Smartphone className="w-4 h-4" />
+                        </div>
+                        <span className="font-cinzel text-xs font-bold text-cream-50">Instant UPI</span>
+                      </div>
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                        paymentMethod === 'UPI' ? 'border-gold-400 bg-gold-400' : 'border-dark-600'
+                      }`}>
+                        {paymentMethod === 'UPI' && <Check className="w-2.5 h-2.5 text-dark-950 font-bold" />}
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-cream-300 leading-tight">
+                      GPay, PhonePe, Paytm, QR Scan & Zero Fees
+                    </p>
+                  </div>
+                  <span className="inline-block mt-2.5 text-[9px] uppercase tracking-wider font-semibold text-gold-400 bg-gold-500/15 border border-gold-500/30 px-2 py-0.5 rounded w-fit">
+                    Fastest Dispatch
+                  </span>
+                </div>
+
+                {/* Cash on Delivery (COD) Option */}
+                <div
+                  onClick={() => setPaymentMethod('COD')}
+                  className={`cursor-pointer rounded-xl p-3.5 border transition-all relative flex flex-col justify-between ${
+                    paymentMethod === 'COD'
+                      ? 'bg-gold-500/10 border-gold-400 shadow-gold-glow'
+                      : 'bg-dark-950 border-dark-700/60 hover:border-dark-600'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 rounded-lg bg-gold-500/20 text-gold-300">
+                          <Banknote className="w-4 h-4" />
+                        </div>
+                        <span className="font-cinzel text-xs font-bold text-cream-50">Cash on Delivery</span>
+                      </div>
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                        paymentMethod === 'COD' ? 'border-gold-400 bg-gold-400' : 'border-dark-600'
+                      }`}>
+                        {paymentMethod === 'COD' && <Check className="w-2.5 h-2.5 text-dark-950 font-bold" />}
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-cream-300 leading-tight">
+                      Pay cash at your doorstep when parcel arrives
+                    </p>
+                  </div>
+                  <span className="inline-block mt-2.5 text-[9px] uppercase tracking-wider font-semibold text-cream-200 bg-dark-800 border border-dark-700 px-2 py-0.5 rounded w-fit">
+                    Pay at Doorstep
+                  </span>
+                </div>
+
+              </div>
+            </div>
+
+            <div className="pt-3">
               <button
                 type="submit"
                 disabled={loading}
                 className="w-full py-3.5 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-dark-950 font-cinzel font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-gold-glow hover:scale-[1.01]"
               >
-                {loading ? 'Processing...' : 'Pay Now'}
-                <ArrowRight className="w-4 h-4" />
+                {loading ? (
+                  'Processing...'
+                ) : paymentMethod === 'COD' ? (
+                  <>
+                    <Banknote className="w-4 h-4" />
+                    <span>Place COD Order (₹{totalPrice.toLocaleString('en-IN')})</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                ) : (
+                  <>
+                    <span>Proceed to UPI Payment (₹{totalPrice.toLocaleString('en-IN')})</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </div>
           </form>
@@ -390,10 +509,20 @@ export default function UpiPaymentModal() {
             </div>
 
             <div>
-              <span className="text-xs text-gold-400 font-cinzel uppercase tracking-[0.25em]">Payment Verification Underway</span>
-              <h3 className="font-cinzel text-2xl font-bold text-cream-50 mt-1">Order Placed Successfully!</h3>
+              <span className="text-xs text-gold-400 font-cinzel uppercase tracking-[0.25em]">
+                {createdOrder.payment_method === 'COD' ? 'Cash on Delivery Booked' : 'Payment Verification Underway'}
+              </span>
+              <h3 className="font-cinzel text-2xl font-bold text-cream-50 mt-1">
+                {createdOrder.payment_method === 'COD' ? 'Order Booked Successfully!' : 'Order Placed Successfully!'}
+              </h3>
               <p className="text-xs text-cream-300 mt-2 max-w-md mx-auto leading-relaxed">
-                Dhanyawad, <strong className="text-cream-100">{formData.customer_name}</strong>! Aapka order <strong className="text-gold-300">{createdOrder.order_number}</strong> hamare atelier mein receive ho gaya hai.
+                Dhanyawad, <strong className="text-cream-100">{formData.customer_name}</strong>! Aapka order{' '}
+                <strong className="text-gold-300">{createdOrder.order_number}</strong> receive ho gaya hai.{' '}
+                {createdOrder.payment_method === 'COD' ? (
+                  <span>Delivery ke waqt courier partner ko cash payment ready rakhein. Hamari team dispatch se pehle confirm karegi.</span>
+                ) : (
+                  <span>Hamare atelier mein payment verification complete hote hi dispatch notification share hogi.</span>
+                )}
               </p>
             </div>
 
@@ -403,17 +532,31 @@ export default function UpiPaymentModal() {
                 <span className="font-mono text-gold-300 font-bold">{createdOrder.order_number}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-cream-300">Paid to UPI ID:</span>
-                <span className="font-mono text-cream-100">{targetUpiId}</span>
+                <span className="text-cream-300">Payment Mode:</span>
+                <span className="font-semibold text-gold-400">
+                  {createdOrder.payment_method === 'COD' ? 'Cash on Delivery (COD)' : 'Instant UPI Payment'}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-cream-300">Amount Paid:</span>
+                <span className="text-cream-300">
+                  {createdOrder.payment_method === 'COD' ? 'Pay on Delivery:' : 'Amount Paid:'}
+                </span>
                 <span className="font-bold text-cream-50">₹{Number(createdOrder.total_amount).toLocaleString('en-IN')}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-cream-300">Submitted UTR:</span>
-                <span className="font-mono text-gold-400">{upiUtr}</span>
-              </div>
+              {createdOrder.payment_method !== 'COD' && (
+                <>
+                  <div className="flex justify-between">
+                    <span className="text-cream-300">Paid to UPI ID:</span>
+                    <span className="font-mono text-cream-100">{targetUpiId}</span>
+                  </div>
+                  {upiUtr && (
+                    <div className="flex justify-between">
+                      <span className="text-cream-300">Submitted UTR:</span>
+                      <span className="font-mono text-gold-400">{upiUtr}</span>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
 
             <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
@@ -422,7 +565,7 @@ export default function UpiPaymentModal() {
                 className="py-3 px-6 rounded-xl bg-[#25D366] text-dark-950 font-cinzel font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:scale-105 transition-all"
               >
                 <MessageCircle className="w-4 h-4" />
-                Send Receipt on WhatsApp
+                {createdOrder.payment_method === 'COD' ? 'Confirm Order on WhatsApp' : 'Send Receipt on WhatsApp'}
               </button>
 
               <button

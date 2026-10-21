@@ -15,8 +15,12 @@ class OrderController {
         $state = trim($data['state'] ?? '');
         $pincode = trim($data['pincode'] ?? '');
         $items = $data['items'] ?? [];
-        $paymentMethod = $data['payment_method'] ?? 'UPI';
+        $paymentMethod = strtoupper(trim($data['payment_method'] ?? 'UPI'));
+        if ($paymentMethod !== 'COD') {
+            $paymentMethod = 'UPI';
+        }
         $upiUtr = trim($data['upi_utr'] ?? '');
+        $paymentStatus = ($paymentMethod === 'COD') ? 'Cash on Delivery' : 'Pending Verification';
 
         if (empty($name) || empty($phone) || empty($address) || empty($pincode) || empty($items)) {
             http_response_code(422);
@@ -66,7 +70,7 @@ class OrderController {
         try {
             $stmt = $db->prepare("INSERT INTO orders 
                 (order_number, customer_name, phone, email, shipping_address, city, state, pincode, total_amount, payment_method, upi_utr, payment_status, order_status, ip_address) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending Verification', 'Placed', ?)");
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Placed', ?)");
             
             $stmt->execute([
                 $orderNumber,
@@ -80,6 +84,7 @@ class OrderController {
                 $totalAmount,
                 $paymentMethod,
                 $upiUtr,
+                $paymentStatus,
                 $ip
             ]);
 
@@ -118,13 +123,15 @@ class OrderController {
 
             echo json_encode([
                 'success' => true,
-                'message' => 'Order initiated successfully',
+                'message' => ($paymentMethod === 'COD') ? 'Cash on Delivery order placed successfully' : 'Order initiated successfully',
                 'order' => [
                     'id' => $orderId,
                     'order_number' => $orderNumber,
                     'customer_name' => $name,
                     'phone' => $phone,
                     'total_amount' => $totalAmount,
+                    'payment_method' => $paymentMethod,
+                    'payment_status' => $paymentStatus,
                     'upi_id' => $upiId,
                     'merchant_name' => $merchant,
                     'upi_intent_uri' => $upiIntentUri

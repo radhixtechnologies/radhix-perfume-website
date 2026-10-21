@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `total_amount` DECIMAL(10,2) NOT NULL,
   `payment_method` VARCHAR(50) DEFAULT 'UPI',
   `upi_utr` VARCHAR(100) NULL,
-  `payment_status` ENUM('Pending Verification', 'Verified / Paid', 'Failed') DEFAULT 'Pending Verification',
+  `payment_status` ENUM('Pending Verification', 'Verified / Paid', 'Failed', 'Cash on Delivery') DEFAULT 'Pending Verification',
   `order_status` ENUM('Placed', 'Processing', 'Dispatched', 'Delivered', 'Cancelled') DEFAULT 'Placed',
   `notes` TEXT NULL,
   `ip_address` VARCHAR(60) NULL,
